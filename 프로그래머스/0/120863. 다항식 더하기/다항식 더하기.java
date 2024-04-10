@@ -7,7 +7,6 @@ class Solution {
         int coe = 0; // 계수
         int con = 0; // 상수
 
-        // '+' 기호를 기준으로 문자열 분할
         String[] parts = str.split("\\+");
         for (String part : parts) {
             if (part.contains("x")) { // x가 있을때
