@@ -2,7 +2,7 @@ import java.util.*;
 
 class Solution {
     public String solution(String str) {
-        str = str.replaceAll("\\s+", "");
+        str = str.replaceAll("\\s", "");
         String answer = "";
         int coe = 0; // 계수
         int con = 0; // 상수
