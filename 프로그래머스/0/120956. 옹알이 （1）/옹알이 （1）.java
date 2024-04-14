@@ -9,8 +9,8 @@ class Solution {
                 }
             }
         }
-        for(int i = 0; i < babbling.length;i++){
-            if(isNum(babbling[i])){
+        for(String str : babbling){
+            if(isNum(str)){
                 answer+=1;
             }
         }
