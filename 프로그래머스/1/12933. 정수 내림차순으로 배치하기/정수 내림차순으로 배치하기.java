@@ -6,9 +6,7 @@ class Solution {
         Arrays.sort(charArray);
         String str1 = new String(charArray);
         StringBuilder sb = new StringBuilder(str1);
-        sb.reverse();
-        String str2 = sb.toString();
-        long answer = Long.parseLong(str2);
+        long answer = Long.parseLong(sb.reverse().toString());
         return answer;
     }
 }
