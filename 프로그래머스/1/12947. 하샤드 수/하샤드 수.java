@@ -7,9 +7,6 @@ class Solution {
 			sum += a % 10;
 			a /= 10;
 		}
-
-		if (x % sum == 0) {
-			return true;
-		} else return false;
+        return x % sum == 0 ? true:false;
     }
 }
