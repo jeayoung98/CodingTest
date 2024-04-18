@@ -1,6 +1,5 @@
 class Solution {
     boolean solution(String s) {
-        boolean answer = true;
         int count = 0;
         String lower = s.toLowerCase();
         for(int i = 0; i< lower.length(); i++){
@@ -11,11 +10,6 @@ class Solution {
                 count -= 1;
             }
         }
-        if(count != 0){
-            answer = false;
-        }
-        
-
-        return answer;
+        return count == 0 ? true:false;
     }
 }
