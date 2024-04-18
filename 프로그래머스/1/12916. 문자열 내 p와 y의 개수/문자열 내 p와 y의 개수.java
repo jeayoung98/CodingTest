@@ -1,18 +1,17 @@
 class Solution {
     boolean solution(String s) {
         boolean answer = true;
-        int p = 0;
-        int y = 0;
+        int count = 0;
         String lower = s.toLowerCase();
         for(int i = 0; i< lower.length(); i++){
             if(lower.charAt(i) == 'p'){
-                p += 1;
+                count += 1;
             }
             if(lower.charAt(i) == 'y'){
-                y += 1;
+                count -= 1;
             }
         }
-        if(p != y){
+        if(count != 0){
             answer = false;
         }
         
