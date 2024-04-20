@@ -2,16 +2,12 @@ import java.util.*;
 class Solution {
     public String solution(String s) {
         String answer = "";
-        String capital = "";
-        for(int i =0 ; i < s.length() ; i++){
-            if((int)s.charAt(i) < 97) capital += s.charAt(i)+"";
-            else answer += s.charAt(i) +"";
+        String[] str = new String[s.length()];
+        str = s.split("");
+        Arrays.sort(str);
+        for(int i = str.length-1; i >= 0; i--){
+            answer += str[i];
         }
-        return strSort(answer) + strSort(capital);
-    }
-    public String strSort(String str){
-        char[] strArr = str.toCharArray();
-        Arrays.sort(strArr);
-        return new StringBuilder(new String(strArr)).reverse().toString();
+        return answer;
     }
 }
