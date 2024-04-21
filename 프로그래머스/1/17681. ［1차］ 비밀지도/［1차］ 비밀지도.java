@@ -2,7 +2,6 @@ class Solution {
     public String[] solution(int n, int[] arr1, int[] arr2) {
         String[] answer = new String[n];
         String[][] wall = new String[n][n];
-       
         
         for(int i = 0; i < n; i++){ // arr1 2진수 변환후 wall에 넣기
             for(int j = 0; j < n; j++){
@@ -25,10 +24,9 @@ class Solution {
                 
             }answer[i] = str;
         }
-        
-        
         return answer;
     }
+    
     public String binary(int num,int n){
         String answer = "";
         answer += Integer.toBinaryString(num);
