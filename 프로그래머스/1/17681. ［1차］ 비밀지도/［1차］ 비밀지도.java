@@ -18,10 +18,8 @@ class Solution {
         for(int i = 0; i < n; i++){ // wall의 1을 #으로 0을 공백으로
             String str = "";
             for(int j = 0; j < n; j++){
-                
-;                if(wall[i][j].equals("1")) str += "#";
+                if(wall[i][j].equals("1")) str += "#";
                 else str += " ";
-                
             }answer[i] = str;
         }
         return answer;
