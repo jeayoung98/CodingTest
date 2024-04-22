@@ -13,11 +13,7 @@ class Solution {
         for (int i = 0; i < n; i++) {
             StringBuilder line = new StringBuilder();
             for (int j = 0; j < n; j++) {
-                if (binary1[i].charAt(j) == '1' || binary2[i].charAt(j) == '1') {
-                    line.append("#");
-                } else {
-                    line.append(" ");
-                }
+                line.append(binary1[i].charAt(j) == '1' || binary2[i].charAt(j) == '1' ? "#" : " ");
             }
             answer[i] = line.toString();
         }
