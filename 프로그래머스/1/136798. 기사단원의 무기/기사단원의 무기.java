@@ -13,13 +13,11 @@ class Solution {
     }
     
     public int factors(int num) {
-        if (num < 1) return 0;
-        int count = 0;
-        int sqrtNum = (int) Math.sqrt(num); 
-        for (int i = 1; i <= sqrtNum; i++) {
+        int count = 0; 
+        for (int i = 1; i <= (int) Math.sqrt(num); i++) {
             if (num % i == 0) { 
                 if (i == num / i) {
-                count++;
+                    count++;
                 } else {
                     count += 2;
             }
