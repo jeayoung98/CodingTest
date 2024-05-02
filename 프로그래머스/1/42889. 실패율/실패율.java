@@ -26,11 +26,11 @@ class Solution {
         // 실패율 기준 내림차순, 실패율이 같다면 스테이지 번호 작은 순
         Collections.sort(failRates, new Comparator<FailRate>() {
             @Override
-            public int compare(FailRate f1, FailRate f2) {
-                if (f1.failRate == f2.failRate) {
-                    return f1.stage - f2.stage;
+            public int compare(FailRate fail1, FailRate fail2) {
+                if (fail1.failRate == fail2.failRate) {
+                    return fail1.stage - fail2.stage;
                 }
-                return Double.compare(f2.failRate, f1.failRate);
+                return Double.compare(fail2.failRate, fail1.failRate);
             }
         });
 
