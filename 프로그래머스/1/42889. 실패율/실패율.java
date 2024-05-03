@@ -38,7 +38,6 @@ class Solution {
         for (int i = 0; i < N; i++) {
             answer[i] = failRates.get(i).stage;
         }
-        
         return answer;
     }
 }
