@@ -3,16 +3,17 @@ class Solution {
         StringBuilder sb = new StringBuilder();
         String answer = "";
         for(int i =0; i<rsp.length();i++){
-            if((rsp.charAt(i)+"").equals("2")){
-                sb.append("0");
+            switch(rsp.charAt(i)){
+                case '2' : sb.append("0");
+                    break;
+                case '0' : sb.append("5");
+                    break;
+                case '5' : sb.append("2");
+                    break;
+                default : sb.append("");
+                    break;
             }
-            else if((rsp.charAt(i)+"").equals("0")){
-                sb.append("5");
-            }
-            else if((rsp.charAt(i)+"").equals("5")){
-                sb.append("2");
-            }
-        }answer +=sb;
+        }answer = sb.toString();
         return answer;
     }
 }
