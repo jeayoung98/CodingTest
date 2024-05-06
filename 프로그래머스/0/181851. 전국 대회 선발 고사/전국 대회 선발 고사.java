@@ -8,7 +8,7 @@ class Solution {
             students.add(new Student(i, rank[i], attendance[i]));
         }
         
-        // 순위로 정렬
+        // // 순위로 정렬
         Collections.sort(students, (a, b) -> Integer.compare(a.rank, b.rank));
         
         // 선발 가능 학생
