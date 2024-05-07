@@ -17,13 +17,9 @@ class Solution {
             answer[0] = 1;
             answer[1] = 6;
         }
-        else if (count == 0 && zero1 == 0){
-            answer[0] = 6;
-            answer[1] = 6;
-        }
         else {
-            answer[0] = 7-count-zero1;
-            answer[1] = 7 - count;
+            answer[0] = Math.min(7-count-zero1,6);
+            answer[1] = Math.min(7 - count,6);
         }
         return answer;
     }
