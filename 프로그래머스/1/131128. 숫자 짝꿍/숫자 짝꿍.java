@@ -12,7 +12,6 @@ class Solution {
         for (char c : Y.toCharArray()) {
             mapY.put(c, mapY.getOrDefault(c, 0) + 1);
         }
-
         // X와 Y비교 후 겹치는 정수 list에 넣기
         List<Character> list = new ArrayList<>();
         for (char c : mapX.keySet()) {
@@ -24,22 +23,22 @@ class Solution {
             }
         }
         // 아무것도 없으면 -1
-        if(list.size()==0) return "-1";
+        if(list.size()==0) return "-1"; 
         
         // 0밖에 없으면 0
         int sum = 0;
         for(char c : list){
             sum += (int)c;
         }
-        if(sum % 48 == 0) return "0"; // 0의 아스키코드48
+        if(sum % 48 == 0) return "0";
         Collections.reverse(list);
         
+        // 일반적인 경우
         StringBuilder sb = new StringBuilder();
         for (char c : list) {
             sb.append(c);
         }
         answer = sb.toString();
-        
         return answer;
     }
 }
