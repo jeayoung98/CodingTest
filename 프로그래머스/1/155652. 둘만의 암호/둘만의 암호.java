@@ -5,7 +5,7 @@ public class Solution {
     public String solution(String s, String skip, int index) {
         // skip에 있는 문자 제거
         List<Character> list = "abcdefghijklmnopqrstuvwxyz".chars()
-                .mapToObj(c -> (char) c) // int를 char로 변환
+                .mapToObj(c -> (char) c)
                 .filter(c -> !skip.contains(String.valueOf(c)))
                 .collect(Collectors.toList());
         list.stream().forEach(a -> System.out.print(a+" "));
