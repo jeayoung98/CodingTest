@@ -7,11 +7,11 @@ class Solution {
                 try{
                     if(i == h || j == w){
                         if(board[h][w].equals(board[i][j])) answer++;
-                        System.out.println(i+" "+j);
+                        System.out.println(i + " " + j);
                     } 
                 }catch (ArrayIndexOutOfBoundsException e){
                     System.out.println("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ");
-                    System.out.println(i+" "+j);
+                    System.out.println(i + " " + j);
                 }
             }
         }
