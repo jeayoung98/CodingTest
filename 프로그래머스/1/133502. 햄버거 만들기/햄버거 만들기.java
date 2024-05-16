@@ -12,14 +12,16 @@ class Solution {
                 boolean bread2 = stack.elementAt(stack.size()-4) == 1;
                 if(bread1 && meet && vegetable && bread2) {
                     answer++;
-                    stack.pop();
-                    stack.pop();
-                    stack.pop();
-                    stack.pop();
+                    stackPop(stack);
                 }
             }
-            
         }
         return answer;
+    }
+    public void stackPop(Stack<Integer> stack){
+        stack.pop();
+        stack.pop();
+        stack.pop();
+        stack.pop();
     }
 }
