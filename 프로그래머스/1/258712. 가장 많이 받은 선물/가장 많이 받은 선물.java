@@ -72,16 +72,12 @@ class Solution {
                     }
                 }
             }
-          
         }
         int max1=0;
         for(int num : recieveMore){
             max1=Math.max(num,max1);
         }
         answer=max1;
-        // for(int i=0;i<send.length;i++){
-        //     System.out.println(result[i]);
-        // }
         return answer;
     }
 }
