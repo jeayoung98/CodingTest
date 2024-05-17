@@ -10,9 +10,9 @@ class Solution {
             map.put(friends[i], new int[friends.length]);
         }
 
-        // 누가가 누구에게 주었는지 저장
+        // 누가 누구에게 주었는지 저장
         for (String gift : gifts) {
-            String[] str = gift.split(" "); // 예: "muzi frodo"
+            String[] str = gift.split(" ");
             String giver = str[0];
             String receiver = str[1];
             int[] arr = map.get(giver); // giver가 준 선물 리스트
@@ -24,7 +24,7 @@ class Solution {
             }
         }
 
-        // 각 친구가 준 선물과 받은 선물의 합계를 계산
+        // 각 친구가 준 선물과 받은 선물의 합계
         int[] send = new int[friends.length];
         int[] receive = new int[friends.length];
         int cnt1 = 0;
@@ -48,15 +48,7 @@ class Solution {
             result[i] = send[i] - receive[i];
         }
 
-        // // 가장 큰 선물 차이를 찾음
-        // int max = result[0];
-        // for (int a : result) {
-        //     if (max < a) {
-        //         max = a;
-        //     }
-        // }
-
-        // 각 친구가 받은 선물 정보를 2차원 배열로 저장
+        //받은 선물 정보
         int[][] arr2 = new int[friends.length][friends.length];
         int idx = 0;
         for (String friend : map.keySet()) {
@@ -64,29 +56,29 @@ class Solution {
             idx++;
         }
 
-        // 각 친구가 더 많이 받은 선물의 수를 계산
-        int[] receiveMore = new int[friends.length];
+        // 선물 받을사람
+        int[] nextGifts = new int[friends.length];
+        // 전치행렬과 비교
         for (int i = 0; i < arr2.length; i++) {
             for (int j = i; j < arr2[i].length; j++) {
-                if (arr2[i][j] > arr2[j][i]) receiveMore[i]++;
-                if (arr2[i][j] < arr2[j][i]) receiveMore[j]++;
+                if (arr2[i][j] > arr2[j][i]) nextGifts[i]++; 
+                if (arr2[i][j] < arr2[j][i]) nextGifts[j]++;
                 if (i != j && (arr2[i][j] == arr2[j][i])) {
                     if (result[i] < result[j]) {
-                        receiveMore[j]++;
+                        nextGifts[j]++;
                     } else if (result[i] > result[j]) {
-                        receiveMore[i]++;
+                        nextGifts[i]++;
                     }
                 }
             }
         }
 
-        // 가장 많이 받은 선물 수를 찾음
+        // 가장 많이 받을 사람
         int max1 = 0;
-        for (int num : receiveMore) {
+        for (int num : nextGifts) {
             max1 = Math.max(num, max1);
         }
         answer = max1;
-
         return answer;
     }
 }
