@@ -1,83 +1,92 @@
 import java.util.*;
+
 class Solution {
     public int solution(String[] friends, String[] gifts) {
-        int answer = 0; 
-       
-        Map<String, int[]>map = new LinkedHashMap<>();
-        for(int i=0;i<friends.length;i++){
-            map.put(friends[i] , new int[friends.length]);
+        int answer = 0;
+
+        // 정보 저장할 맵
+        Map<String, int[]> map = new LinkedHashMap<>();
+        for (int i = 0; i < friends.length; i++) {
+            map.put(friends[i], new int[friends.length]);
         }
-        
-        for(int i=0;i<gifts.length;i++){
-            String[] str = gifts[i].split(" ");//muzi , frodo
-            int[] arr = map.get(str[0]); // muzi 가 준사람 list
-            for(int j=0;j<arr.length;j++){ // list 반복문
-                if(str[1].equals(friends[j])){// friends와 str[1] frodo 값이 같을때 인덱스 찾기
-                    arr[j]+=1;
-                    map.put(str[0] , arr);// muzi가 준사람중에 forodo index에 +1
+
+        // 누가가 누구에게 주었는지 저장
+        for (String gift : gifts) {
+            String[] str = gift.split(" "); // 예: "muzi frodo"
+            String giver = str[0];
+            String receiver = str[1];
+            int[] arr = map.get(giver); // giver가 준 선물 리스트
+            for (int j = 0; j < friends.length; j++) {
+                if (receiver.equals(friends[j])) {
+                    arr[j] += 1; // receiver에 해당하는 인덱스에 +1
                     break;
                 }
             }
         }
+
+        // 각 친구가 준 선물과 받은 선물의 합계를 계산
         int[] send = new int[friends.length];
-        int[] recieve = new int[friends.length];
-        int cnt1=0;
-        for(String str : map.keySet()){
-            //str의 준 선물 구하기
-            int[] sendGift = map.get(str);
-            int sendSum =0;
-            for(int i=0;i<sendGift.length;i++){
-                sendSum+=sendGift[i];
-                if(sendGift[i]!=0){
-                    recieve[i]+=sendGift[i];
+        int[] receive = new int[friends.length];
+        int cnt1 = 0;
+
+        for (String friend : map.keySet()) {
+            int[] sendGifts = map.get(friend);
+            int sendSum = 0;
+            for (int i = 0; i < sendGifts.length; i++) {
+                sendSum += sendGifts[i];
+                if (sendGifts[i] != 0) {
+                    receive[i] += sendGifts[i]; // 각 친구가 받은 선물의 수를 계산
                 }
             }
             send[cnt1] = sendSum;
             cnt1++;
-            //str의 받은 선물 구하기
-            
         }
+
+        // 선물 지수
         int[] result = new int[friends.length];
-        for(int i=0;i<result.length;i++){
-            result[i] = send[i]-recieve[i];
+        for (int i = 0; i < result.length; i++) {
+            result[i] = send[i] - receive[i];
         }
-        int max=result[0];
-        for(int a : result){
-            if(max<a){
-                max = a;
-            }
-        }
-        
+
+        // // 가장 큰 선물 차이를 찾음
+        // int max = result[0];
+        // for (int a : result) {
+        //     if (max < a) {
+        //         max = a;
+        //     }
+        // }
+
+        // 각 친구가 받은 선물 정보를 2차원 배열로 저장
         int[][] arr2 = new int[friends.length][friends.length];
-        int idx=0;
-        for(String str : map.keySet()){
-            
-            arr2[idx]= map.get(str);
+        int idx = 0;
+        for (String friend : map.keySet()) {
+            arr2[idx] = map.get(friend);
             idx++;
         }
-        
-        int[] recieveMore = new int[friends.length];
-        for(int i=0;i<arr2.length;i++){
-            for(int j=i;j<arr2[i].length;j++){
-                if(arr2[i][j]>arr2[j][i]) recieveMore[i]++;
-                if(arr2[i][j]<arr2[j][i]) recieveMore[j]++;
-                if(i!=j && (arr2[i][j] == arr2[j][i])){
-                    if(result[i]<result[j]){
-                        recieveMore[j]+=1;
-                    }else if(result[i]==result[j]){
-                        
-                    }
-                    else{
-                        recieveMore[i]+=1;
+
+        // 각 친구가 더 많이 받은 선물의 수를 계산
+        int[] receiveMore = new int[friends.length];
+        for (int i = 0; i < arr2.length; i++) {
+            for (int j = i; j < arr2[i].length; j++) {
+                if (arr2[i][j] > arr2[j][i]) receiveMore[i]++;
+                if (arr2[i][j] < arr2[j][i]) receiveMore[j]++;
+                if (i != j && (arr2[i][j] == arr2[j][i])) {
+                    if (result[i] < result[j]) {
+                        receiveMore[j]++;
+                    } else if (result[i] > result[j]) {
+                        receiveMore[i]++;
                     }
                 }
             }
         }
-        int max1=0;
-        for(int num : recieveMore){
-            max1=Math.max(num,max1);
+
+        // 가장 많이 받은 선물 수를 찾음
+        int max1 = 0;
+        for (int num : receiveMore) {
+            max1 = Math.max(num, max1);
         }
-        answer=max1;
+        answer = max1;
+
         return answer;
     }
 }
