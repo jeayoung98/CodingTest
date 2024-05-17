@@ -1,5 +1,3 @@
-import java.util.Stack;
-
 class Solution {
     public String solution(int[] numbers, String hand) {
         StringBuilder answer = new StringBuilder();
