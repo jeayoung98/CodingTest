@@ -2,68 +2,102 @@ import java.util.*;
 
 class Solution {
     public int solution(String[] friends, String[] gifts) {
-        int answer = 0;
-
-        // 정보 저장할 맵
+        Map<String, int[]> giftMap = giftMap(friends, gifts);
+        int[] send = sentGifts(giftMap, friends);
+        int[] receive = receivedGifts(giftMap, friends);
+        
+        int[] result = giftScore(send, receive);
+        int[][] giftMatrix = giftMatrix(giftMap, friends);
+        
+        int[] nextGifts = nextGifts(giftMatrix, result, friends);
+        return findMax(nextGifts);
+    }
+    
+    // 정보 저장할 맵
+    public Map<String, int[]> giftMap(String[] friends, String[] gifts) {
         Map<String, int[]> map = new LinkedHashMap<>();
-        for (int i = 0; i < friends.length; i++) {
-            map.put(friends[i], new int[friends.length]);
+        for (String friend : friends) {
+            map.put(friend, new int[friends.length]);
         }
-
         // 누가 누구에게 주었는지 저장
         for (String gift : gifts) {
-            String[] str = gift.split(" ");
-            String giver = str[0];
-            String receiver = str[1];
+            String[] parts = gift.split(" ");
+            String giver = parts[0];
+            String receiver = parts[1];
             int[] arr = map.get(giver); // giver가 준 선물 리스트
             for (int j = 0; j < friends.length; j++) {
                 if (receiver.equals(friends[j])) {
-                    arr[j] += 1; // receiver에 해당하는 인덱스에 +1
+                    arr[j]++; // receiver에 해당하는 인덱스에 +1
                     break;
                 }
             }
         }
+        return map;
+    }
 
-        // 각 친구가 준 선물과 받은 선물의 합계
+    // 각 친구가 보낸 선물의 총 수
+    public int[] sentGifts(Map<String, int[]> giftMap, String[] friends) {
         int[] send = new int[friends.length];
-        int[] receive = new int[friends.length];
-        int cnt1 = 0;
-
-        for (String friend : map.keySet()) {
-            int[] sendGifts = map.get(friend);
+        int cnt = 0;
+        for (String friend : giftMap.keySet()) {
+            int[] sendGifts = giftMap.get(friend);
             int sendSum = 0;
             for (int i = 0; i < sendGifts.length; i++) {
                 sendSum += sendGifts[i];
-                if (sendGifts[i] != 0) {
-                    receive[i] += sendGifts[i]; // 각 친구가 받은 선물의 수를 계산
+            }
+            send[cnt] = sendSum;
+            cnt++;
+        }
+        return send;
+    }
+
+    // 각 친구가 받은 선물의 총 수
+    public int[] receivedGifts(Map<String, int[]> giftMap, String[] friends) {
+        int[] receive = new int[friends.length];
+        for (int[] gifts : giftMap.values()) {
+            for (int i = 0; i < gifts.length; i++) {
+                if (gifts[i] != 0) {
+                    receive[i] += gifts[i];
                 }
             }
-            send[cnt1] = sendSum;
-            cnt1++;
         }
+        return receive;
+    }
 
-        // 선물 지수
-        int[] result = new int[friends.length];
+    // 선물 지수
+    public int[] giftScore(int[] send, int[] receive) {
+        int[] result = new int[send.length];
         for (int i = 0; i < result.length; i++) {
             result[i] = send[i] - receive[i];
         }
+        return result;
+    }
 
-        //받은 선물 정보
-        int[][] arr2 = new int[friends.length][friends.length];
+    // 주고받은 선물 총 수를 이차원 배열로
+    public int[][] giftMatrix(Map<String, int[]> giftMap, String[] friends) {
+        int[][] matrix = new int[friends.length][friends.length];
         int idx = 0;
-        for (String friend : map.keySet()) {
-            arr2[idx] = map.get(friend);
+        for (String friend : giftMap.keySet()) {
+            matrix[idx] = giftMap.get(friend);
             idx++;
         }
+        return matrix;
+    }
 
-        // 선물 받을사람
+    // 다음 선물을 계산
+    public int[] nextGifts(int[][] giftMatrix, int[] result, String[] friends) {
+        // 선물 받을 사람
         int[] nextGifts = new int[friends.length];
         // 전치행렬과 비교
-        for (int i = 0; i < arr2.length; i++) {
-            for (int j = i; j < arr2[i].length; j++) {
-                if (arr2[i][j] > arr2[j][i]) nextGifts[i]++; 
-                if (arr2[i][j] < arr2[j][i]) nextGifts[j]++;
-                if (i != j && (arr2[i][j] == arr2[j][i])) {
+        for (int i = 0; i < giftMatrix.length; i++) {
+            for (int j = i; j < giftMatrix[i].length; j++) {
+                if (giftMatrix[i][j] > giftMatrix[j][i]) {
+                    nextGifts[i]++;
+                }
+                if (giftMatrix[i][j] < giftMatrix[j][i]) {
+                    nextGifts[j]++;
+                }
+                if (i != j && (giftMatrix[i][j] == giftMatrix[j][i])) {
                     if (result[i] < result[j]) {
                         nextGifts[j]++;
                     } else if (result[i] > result[j]) {
@@ -72,13 +106,15 @@ class Solution {
                 }
             }
         }
+        return nextGifts;
+    }
 
-        // 가장 많이 받을 사람
-        int max1 = 0;
+    // 가장 많이 받을 사람
+    public int findMax(int[] nextGifts) {
+        int max = 0;
         for (int num : nextGifts) {
-            max1 = Math.max(num, max1);
+            max = Math.max(num, max);
         }
-        answer = max1;
-        return answer;
+        return max;
     }
 }
