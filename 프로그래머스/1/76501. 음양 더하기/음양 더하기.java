@@ -1,9 +1,8 @@
+import java.util.stream.*;
 class Solution {
     public int solution(int[] absolutes, boolean[] signs) {
-        int answer = 0;
-        for(int i = 0; i < absolutes.length; i++){
-            answer += signs[i] == false? -absolutes[i]:absolutes[i];
-        }
-        return answer;
+        return IntStream.rangeClosed(0,signs.length-1)
+            .map(i -> (signs[i] ? 1 : -1) * absolutes[i])
+            .sum();
     }
 }
