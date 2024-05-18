@@ -1,12 +1,10 @@
+import java.util.stream.*;
+
 class Solution {
     public int solution(int n) {
-        int answer = n-1;
-        for(int i = 2; i < n/2;i++){
-            if(n%i == 1){
-                answer = i;
-                break;
-            }
-        }
-        return answer;
+        return IntStream.rangeClosed(2, n - 1)
+            .filter(i -> n % i == 1)
+            .min()
+            .orElse(1);
     }
 }
