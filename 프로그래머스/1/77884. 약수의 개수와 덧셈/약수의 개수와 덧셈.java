@@ -1,18 +1,16 @@
+import java.util.stream.*;
+
 class Solution {
     public int solution(int left, int right) {
-        int answer = 0;
-        for(int i = left; i <= right; i++){
-            answer += count(i) % 2 == 0 ? i:-i;
-        }
-        return answer;
+        int sum = IntStream.rangeClosed(left, right).sum();
+        int odd = IntStream.rangeClosed(left, right)
+                           .filter(i -> isSquare(i))
+                           .sum()*2;
+        return sum - odd;
     }
-    public int count(int a){
-        int count = 2;
-        if(a == 1) return 1;
-        for(int i = 2; i <= a/2; i++){
-            if(a % i == 0){
-                count++;
-            }
-        }return count;
+
+    private boolean isSquare(int num) {
+        int sqrt = (int) Math.sqrt(num);
+        return sqrt * sqrt == num;
     }
 }
