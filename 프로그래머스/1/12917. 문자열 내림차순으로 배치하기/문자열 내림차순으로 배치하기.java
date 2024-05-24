@@ -1,8 +1,12 @@
+import java.util.stream.*;
 import java.util.*;
+
 class Solution {
     public String solution(String s) {
-        char[] charArr = s.toCharArray();
-        Arrays.sort(charArr);
-        return new StringBuilder(new String(charArr)).reverse().toString();
+        return s.chars()
+                .mapToObj(c -> (char) c)
+                .sorted(Comparator.reverseOrder())
+                .map(String::valueOf)
+                .collect(Collectors.joining());
     }
 }
