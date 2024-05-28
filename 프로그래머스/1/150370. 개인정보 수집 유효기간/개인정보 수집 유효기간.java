@@ -21,10 +21,9 @@ class Solution {
             for(int j=0;j<yearArr.length;j++){
                 intArr[j] = Integer.parseInt(yearArr[j]);
             }
-            // int month = (intArr[1]+num)%12==0?intArr[1]+num+1:intArr[1]+num;
+
             intArr[0]+= (intArr[1]+num)%12==0?(intArr[1]+num)/12-1:(intArr[1]+num)/12;
             intArr[1]= (intArr[1]+num)%12==0?(intArr[1]+num)%12+12:(intArr[1]+num)%12;
-            
             
             if(Integer.parseInt(todayArr[0])>intArr[0]){
                 answer.add(i+1);
