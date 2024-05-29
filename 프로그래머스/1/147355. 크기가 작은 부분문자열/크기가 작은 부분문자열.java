@@ -1,10 +1,9 @@
+import java.util.stream.*;
+
 class Solution {
     public int solution(String t, String p) {
-        int answer = 0;
-        long length = p.length();
-        for (int i = 0; i <= t.length() - length; i++) {
-            if (Long.parseLong(t.substring(i, i + (int) length)) <= Long.parseLong(p)) answer++;
-        }
-        return answer;
+        return (int) IntStream.rangeClosed(0, t.length() - (int) p.length())
+                .filter(i -> Long.parseLong(t.substring(i, i + (int)p.length())) <= Long.parseLong(p))
+                .count();
     }
 }
