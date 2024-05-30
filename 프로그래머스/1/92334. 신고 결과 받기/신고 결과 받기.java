@@ -11,7 +11,7 @@ class Solution {
         for(String str : report){
             String[] strArr = str.split(" ");
             Set<String> set = map1.getOrDefault(strArr[0], new HashSet<>());
-            // 사용자가 신고한 사람에 포함 안될 경우 +1
+            // 사용자가 신고한 유저에 포함 안될 경우 +1
             if(!set.contains(strArr[1])){
                 set.add(strArr[1]);
                 map.put(strArr[1], map.getOrDefault(strArr[1], 0) + 1);
@@ -19,20 +19,20 @@ class Solution {
             }
         }
         
-        // 신고 횟수가 k번 이상인 유저들을 정지
-        Map<String, Integer> suspended = new HashMap<>();
+        // 신고 횟수가 k번 이상인 유저
+        Set<String> suspended = new HashSet<>();
         for (String user : map.keySet()) {
             if (map.get(user) >= k) {
-                suspended.put(user, 1);
+                suspended.add(user);
             }
         }
         
-        // 정지된 유저를 신고한 사람들에게 메일 횟수 계산
+        // 신고한 유저 메일 횟수 계산
         for (int i = 0; i < id_list.length; i++) {
             String user = id_list[i];
             if (map1.containsKey(user)) {
                 for (String reportUser : map1.get(user)) {
-                    if (suspended.containsKey(reportUser)) {
+                    if (suspended.contains(reportUser)) {
                         answer[i]++;
                     }
                 }
