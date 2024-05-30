@@ -31,8 +31,8 @@ class Solution {
         for (int i = 0; i < id_list.length; i++) {
             String user = id_list[i];
             if (map1.containsKey(user)) {
-                for (String reportedUser : map1.get(user)) {
-                    if (suspended.containsKey(reportedUser)) {
+                for (String reportUser : map1.get(user)) {
+                    if (suspended.containsKey(reportUser)) {
                         answer[i]++;
                     }
                 }
