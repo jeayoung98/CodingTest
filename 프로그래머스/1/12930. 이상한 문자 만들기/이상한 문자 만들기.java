@@ -1,7 +1,7 @@
 class Solution {
     public String solution(String s) {
         s = s.toLowerCase();
-        String answer = "";
+        StringBuilder answer = new StringBuilder();
         String[] strArr = s.split("");
         int index = 0;
         for(int i = 0; i < strArr.length; i++){
@@ -10,8 +10,8 @@ class Solution {
                 strArr[i] = strArr[i].toUpperCase();
             }
             if(!strArr[i].equals(" ")) index++;
-            answer += strArr[i];
+            answer.append(strArr[i]);
         }
-        return answer;
+        return answer.toString();
     }
 }
