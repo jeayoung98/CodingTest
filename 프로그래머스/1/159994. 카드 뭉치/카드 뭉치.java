@@ -3,12 +3,9 @@ import java.util.*;
 class Solution {
     public String solution(String[] cards1, String[] cards2, String[] goal) {
         String answer = "Yes";
-        card(goal,cards1);
-        card(goal,cards2);
-        if (card(goal, cards1).equals("No") || card(goal, cards2).equals("No")) {
-            answer = "No";
-        }
-        return answer;
+        String cardComplete1 = card(goal,cards1);
+        String cardComplete2 = card(goal,cards2);
+        return complete(cardComplete1,cardComplete2);
     }
     public String card(String[] goal,String[] list){
         List<String> listCards = Arrays.asList(list);
@@ -22,5 +19,12 @@ class Solution {
                 count++;
             }
         }return "Yes";
+    }
+    
+    public String complete(String cardComplete1,String cardComplete2){
+        if (cardComplete1.equals("No")||cardComplete2.equals("No")) {
+            return "No";
+        }
+        return "Yes";
     }
 }
