@@ -4,14 +4,14 @@ class Solution {
         int[] legend = new int[k];
         int[] answer = new int[score.length];
         if(k >= score.length){
-            Arrays.fill(legend,3000);
+            Arrays.fill(legend,Integer.MAX_VALUE);
             for(int i = 0; i < score.length; i++){
                 legend[i] = score[i];
                 Arrays.sort(legend);
                 answer[i] = legend[0];
             }
         }else{
-            int min = 3000;
+            int min = Integer.MAX_VALUE;
         for(int i = 0; i < k; i++){
             min = Math.min(score[i],min);
             answer[i] = min;
