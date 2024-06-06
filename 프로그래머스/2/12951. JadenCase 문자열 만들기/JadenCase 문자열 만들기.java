@@ -2,14 +2,7 @@ import java.util.*;
 import java.util.stream.*;
 class Solution {
     public String solution(String s) {
-        StringBuilder sb = new StringBuilder(s);
-        char[] blankArr = sb.reverse().toString().toCharArray();
-        StringBuilder blank = new StringBuilder();
-        for(char c : blankArr){
-            if(Character.isLetter(c)) break;
-            if(c == ' ') blank.append(c+"");
-        }
-        String[] strArr = s.split(" ");
+        String[] strArr = s.split(" ",-1);
         
         String[] capitalizedArr = Arrays.stream(strArr)
                 .map(str -> {
@@ -20,6 +13,6 @@ class Solution {
                 })
                 .toArray(String[]::new);
         
-        return String.join(" ", capitalizedArr) + blank.toString();
+        return String.join(" ", capitalizedArr);
     }
 }
