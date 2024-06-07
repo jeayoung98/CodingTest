@@ -45,7 +45,6 @@ class Solution {
 class FailRate {
     int stage;
     double failRate;
-
     public FailRate(int stage, double failRate) {
         this.stage = stage;
         this.failRate = failRate;
