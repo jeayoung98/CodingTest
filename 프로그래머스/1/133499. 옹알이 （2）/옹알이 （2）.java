@@ -5,14 +5,14 @@ class Solution {
         String[] bab = {"aya", "ye", "woo", "ma"};
         
         for (String word : babbling) {
-            if (isValidWord(word,bab)) {
+            if (isPossible(word,bab)) {
                 count++;
             }
         }
         return count;
     }
 
-    public boolean isValidWord(String word,String[] bab) {
+    public boolean isPossible(String word,String[] bab) {
         int index = 0;
         String last = "";
         while (index < word.length()) {
@@ -33,8 +33,7 @@ class Solution {
             if (!found) {
                 return false;
             }
-        }
-        
+        }  
         return true;
     }
 }
