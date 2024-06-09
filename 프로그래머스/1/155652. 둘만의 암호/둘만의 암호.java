@@ -8,7 +8,6 @@ public class Solution {
                 .mapToObj(c -> (char) c)
                 .filter(c -> !skip.contains(String.valueOf(c)))
                 .collect(Collectors.toList());
-        list.stream().forEach(a -> System.out.print(a+" "));
 
         // 인덱스만큼 움직이기
         return s.chars()
