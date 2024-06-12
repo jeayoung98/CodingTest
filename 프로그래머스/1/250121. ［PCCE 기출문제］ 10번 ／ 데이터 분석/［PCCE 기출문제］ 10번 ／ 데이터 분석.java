@@ -3,7 +3,6 @@ import java.util.*;
 class Solution {
     // 맵 초기화
     Map<String, Integer> map = new HashMap<>();
-
     {
         map.put("code", 0);
         map.put("date", 1);
