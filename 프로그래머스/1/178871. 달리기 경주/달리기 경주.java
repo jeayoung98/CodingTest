@@ -7,7 +7,6 @@ class Solution {
         for (int i = 0; i < players.length; i++) {
             map.put(players[i], i);
         }
-
         List<String> horseList = new ArrayList<>(Arrays.asList(players));
 
         for (String horse : callings) {
