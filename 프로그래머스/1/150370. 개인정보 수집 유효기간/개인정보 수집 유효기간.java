@@ -2,7 +2,6 @@ import java.util.*;
 class Solution {
     public int[] solution(String today, String[] terms, String[] privacies) {
         List<Integer> answer = new ArrayList<>();
-        
         Map<String,Integer> map = new HashMap<>();
         String[] todayArr = today.split("\\.");
         
