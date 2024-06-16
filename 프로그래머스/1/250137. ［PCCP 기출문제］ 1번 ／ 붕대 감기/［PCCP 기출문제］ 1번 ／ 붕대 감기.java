@@ -1,9 +1,9 @@
 import java.util.*;
 
 class Solution {
-    static int hpMax;
-    static int time;
-    static int currentHp;
+    int hpMax;
+    int time;
+    int currentHp;
     
     public int solution(int[] bandage, int health, int[][] attacks) {
         hpMax = health;
@@ -21,6 +21,7 @@ class Solution {
         return currentHp;
     }
     
+    // hp 증가 메서드
     public void hp(int heal){
         currentHp += heal;
         if(currentHp > hpMax){
@@ -28,6 +29,7 @@ class Solution {
         }
     }
     
+    // 초당, 추가 회복량처리
     public void healing(int healTime,int hpPlus,int hpBonus){
         if(time == 1) return;
         hp((time - 1) * hpPlus);
@@ -37,10 +39,12 @@ class Solution {
         }
     }
     
+    // 공격 받았을때
     public void damage(int attack){
         currentHp -= attack;
     }
     
+    // 체력이 0이하인지 확인
     public boolean isDead(){
         boolean gg = false;
         if(currentHp <= 0){
