@@ -2,15 +2,15 @@ import java.util.*;
 
 class Solution {
     public int solution(String[] friends, String[] gifts) {
-        Map<String, int[]> giftMap = giftMap(friends, gifts);
-        int[] send = sentGifts(giftMap, friends);
-        int[] receive = receivedGifts(giftMap, friends);
+        Map<String, int[]> giftMap = giftMap(friends, gifts); // 정보 저장
+        int[] send = sentGifts(giftMap, friends); // 각각 보낸 선물수
+        int[] receive = receivedGifts(giftMap, friends); // 각각 받은 선물 수
         
-        int[] result = giftScore(send, receive);
-        int[][] giftMatrix = giftMatrix(giftMap, friends);
+        int[] result = giftScore(send, receive); // 선물 지수
+        int[][] giftMatrix = giftMatrix(giftMap, friends); // 주고받은 선물 2차원 배열
         
-        int[] nextGifts = nextGifts(giftMatrix, result, friends);
-        return findMax(nextGifts);
+        int[] nextGifts = nextGifts(giftMatrix, result, friends); // 각각 다음번에 받을 선물 수
+        return findMax(nextGifts); // 가장 많이 받을 사람의 선물 수
     }
     
     // 정보 저장할 맵
@@ -88,7 +88,7 @@ class Solution {
     public int[] nextGifts(int[][] giftMatrix, int[] result, String[] friends) {
         // 선물 받을 사람
         int[] nextGifts = new int[friends.length];
-        // 전치행렬과 비교
+        // 전치했을때와 비교
         for (int i = 0; i < giftMatrix.length; i++) {
             for (int j = i; j < giftMatrix[i].length; j++) {
                 if (giftMatrix[i][j] > giftMatrix[j][i]) {
