@@ -1,9 +1,9 @@
 class Solution {
-        static int[]  answer;  // 결과를 저장할 배열
-    static int y = 1;  // 채워 넣을 숫자, 1부터 시작
-    static int x;  // 남은 숫자의 수
+    int[]  answer;  // 결과를 저장할 배열
+    int y = 1;  // 채워 넣을 숫자, 1부터 시작
+    int x;  // 남은 숫자의 수
 
-    public static int[] solution(int n) {
+    public int[] solution(int n) {
         answer = new int[n*(n+1)/2];
         x = n;
 
@@ -30,7 +30,7 @@ class Solution {
     }
 
     // 아래로
-    public static int down(int p, int q){
+    public int down(int p, int q){
         for(int i = 0 ; i < x; i++){
             answer[p + q] = y;
             y++;
@@ -43,7 +43,7 @@ class Solution {
     }
 
     // 오른쪽
-    public static int right(int d){
+    public int right(int d){
         for(int i = 0; i < x; i++){
             answer[d + 1] = y;
             y++;
@@ -53,7 +53,7 @@ class Solution {
     }
 
     // 위로
-    public static int up(int r, int c){
+    public int up(int r, int c){
         for(int i = 0; i < x; i++){
             answer[r - c] = y;
             y++;
