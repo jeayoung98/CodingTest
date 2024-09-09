@@ -3,10 +3,6 @@ import java.util.*;
 class Solution {
     public int solution(int[] priorities, int location) {
         int answer = 0;
-        List<Integer> prioritiesList = new ArrayList<>();
-        for(int i = 0 ; i < priorities.length; i++){
-            prioritiesList.add(priorities[i]);
-        }
         
         Deque<List<Integer>> deque = new ArrayDeque<>();
         for(int i = 0; i < priorities.length; i++){
@@ -29,10 +25,7 @@ class Solution {
                 List<Integer> i = deque.removeFirst();
                 if(i.get(0) == location) break;
             }
-            
         }
-        
-        
         return answer;
     }
 }
