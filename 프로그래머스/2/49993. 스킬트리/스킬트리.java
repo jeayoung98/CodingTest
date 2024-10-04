@@ -1,26 +1,27 @@
 import java.util.*;
+import java.util.stream.*;
 
 class Solution {
     public int solution(String skill, String[] skill_trees) {
-        int answer = 0;
-        Deque<String> deque = new ArrayDeque<>();
-        for(int i = 0; i < skill.length(); i++){
-            deque.add(skill.charAt(i)+"");
-        }
-        for(int i = 0; i < skill_trees.length; i++){
-            String str = skill_trees[i].replaceAll("[^" + skill + "]", "");
-            System.out.println(str);
-            skill_trees[i] = str;
-            if(str.isEmpty()) answer++;
-        }
-        String k = "";
-        while(!deque.isEmpty()){
-            k += deque.removeFirst();
-            for(int i = 0; i < skill_trees.length; i++){
-                if(skill_trees[i].equals(k)) answer++;
+        
+        List<String> skillOrder = Arrays.stream(skill.split(""))
+                                        .collect(Collectors.toList());
+
+        return (int) Arrays.stream(skill_trees)
+                           .map(tree -> tree.replaceAll("[^" + skill + "]", "")) 
+                           .filter(s -> isValidSkillTree(skillOrder, s)) 
+                           .count(); 
+    }
+
+    private boolean isValidSkillTree(List<String> skillOrder, String s) {
+        int lastIdx = -1; 
+        for (char ch : s.toCharArray()) {
+            int idx = skillOrder.indexOf(String.valueOf(ch));
+            if (idx == -1 || idx > lastIdx + 1) {
+                return false;
             }
-            
+            lastIdx = idx;
         }
-        return answer;
+        return true;
     }
 }
