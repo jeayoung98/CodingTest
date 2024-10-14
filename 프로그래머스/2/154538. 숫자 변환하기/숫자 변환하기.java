@@ -1,10 +1,14 @@
 import java.util.*;
 
 public class Solution {
-    public static int solution(int x, int y, int n) {
+    public int solution(int x, int y, int n) {
         if (x == y) return 0;
+        return bfs(x, y, n);
+    }
+
+    private int bfs(int x, int y, int n) {
         Queue<Integer> queue = new LinkedList<>();
-        boolean[] visited = new boolean[y + 1];
+        boolean[] visited = new boolean[y + 1];  
         queue.offer(x);
         visited[x] = true;
         int count = 0;
@@ -15,7 +19,7 @@ public class Solution {
                 int[] results = {current + n, current * 2, current * 3};
                 for (int result : results) {
                     if (result == y) {
-                        return count + 1; 
+                        return count + 1;
                     }
                     if (result <= y && !visited[result]) {
                         queue.offer(result);
@@ -23,8 +27,9 @@ public class Solution {
                     }
                 }
             }
-            count++;
+            count++; 
         }
-        return -1; 
+
+        return -1;
     }
 }
