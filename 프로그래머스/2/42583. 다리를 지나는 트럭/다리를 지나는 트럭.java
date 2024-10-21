@@ -5,12 +5,10 @@ class Solution {
         int totalWeight = 0;
         int answer = 0;
         Deque<Integer> bridge = new ArrayDeque<>();
-        int time = 0;
         int i = 0;
 
         while (i < truck_weights.length) {
-            time++;
-
+            answer++;
             if (bridge.size() == bridge_length) {
                 totalWeight -= bridge.pollFirst();
             }
@@ -23,8 +21,6 @@ class Solution {
                 bridge.add(0);
             }
         }
-
-        answer = time + bridge_length;
-        return answer;
+        return answer + bridge_length;
     }
 }
