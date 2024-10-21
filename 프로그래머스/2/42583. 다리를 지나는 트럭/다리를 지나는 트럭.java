@@ -1,10 +1,10 @@
 import java.util.*;
 
 class Solution {
-    int totalWeight = 0;
-    int answer = 0;
-    Deque<Integer> bridge = new ArrayDeque<>();
     public int solution(int bridge_length, int weight, int[] truck_weights) { 
+        int totalWeight = 0;
+        int answer = 0;
+        Deque<Integer> bridge = new ArrayDeque<>();
         int time = 0;
         int i = 0;
 
