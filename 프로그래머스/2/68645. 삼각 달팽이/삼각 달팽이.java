@@ -1,12 +1,10 @@
 class Solution {
-    int[]  answer;  // 결과를 저장할 배열
-    int y = 1;  // 채워 넣을 숫자, 1부터 시작
-    int x;  // 남은 숫자의 수
-
+    int[]  answer;
+    int y = 1;
+    int x;
     public int[] solution(int n) {
         answer = new int[n*(n+1)/2];
         x = n;
-
         // 올라가는 숫자 , 2씩 더해주기
         int p = 0;
         // 현재 숫자 , 업데이트 해주기
