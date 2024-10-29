@@ -6,7 +6,6 @@ class Solution {
 
         while (end < sequence.length) {
             sum += sequence[end++];
-            
             while (sum >= k) {
                 if (sum == k) {
                     if (min > end - start) {
@@ -18,7 +17,6 @@ class Solution {
                 sum -= sequence[start++];
             }
         }
-        
         return answer;
     }
 }
