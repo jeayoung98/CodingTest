@@ -9,7 +9,6 @@ class Solution {
         dfs(n - 1, 0, 0);
         return result;
     }
-
     private void dfs(int cursor, int offset, int score) {
         if (cursor == -1) {
             result = Math.min(result, score + offset);
