@@ -1,21 +1,28 @@
 class Solution {
-    private String str;
-    private int result;
-
+    int answer = 0;
+    int floor;
     public int solution(int storey) {
-        this.str = Integer.toString(storey);
-        this.result = Integer.MAX_VALUE;
-        int n = str.length();
-        dfs(n - 1, 0, 0);
-        return result;
+        floor = storey;
+        do {
+            System.out.println(floor);
+            int value = floor % 10;
+            floor /= 10;
+            move(value);
+        } while(floor != 0);
+        return answer;
     }
-    private void dfs(int cursor, int offset, int score) {
-        if (cursor == -1) {
-            result = Math.min(result, score + offset);
-            return;
+
+    private boolean isRoundedUp(int value) {
+        if(floor % 10 >= 5  && value == 5) return true;
+        return value > 5;
+    }
+
+    private void move(int value) {
+        if(isRoundedUp(value)) {
+            answer += (10 - value);
+            floor += 1;
+        } else {
+            answer += value;
         }
-        int num = Character.getNumericValue(str.charAt(cursor)) + offset;
-        dfs(cursor - 1, 0, score + num);
-        dfs(cursor - 1, 1, score + 10 - num);
     }
 }
