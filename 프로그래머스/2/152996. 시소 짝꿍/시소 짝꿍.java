@@ -23,7 +23,6 @@ class Solution {
                          .sum();        
         return answer;
     }
-    
     public long countPairs(double num,List<Integer> list){
         long result = 0L;
         long count = list.stream().filter(i -> (double)i == num).count();
