@@ -32,7 +32,6 @@ public class Main {
                 }
             }
         }
-
         System.out.println(count);
         System.out.println(maxSize);
     }
@@ -48,11 +47,11 @@ public class Main {
             int cx = current[0];
             int cy = current[1];
             size++;
-
+            
             for (int i = 0; i < dx.length; i++) {
                 int nx = cx + dx[i];
                 int ny = cy + dy[i];
-
+                
                 if (nx >= 0 && nx < arr.length && ny >= 0 && ny < arr[0].length && arr[nx][ny] == 1 && !visited[nx][ny]) {
                     visited[nx][ny] = true;
                     queue.add(new int[]{nx, ny});
