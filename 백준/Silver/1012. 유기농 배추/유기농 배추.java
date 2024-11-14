@@ -1,73 +1,61 @@
-import java.util.Scanner;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.*;
 
 public class Main {
-    // 배추밭 배열과 방문 여부 배열
-    static int[][] farm;
-    static boolean[][] visited;
-
-    // 가로 M, 세로 N, 배추 수 K
-    static int M, N, K;
-
-    // 상 하 좌 우
     static int[] dx = {0, 0, 1, -1};
     static int[] dy = {1, -1, 0, 0};
+    static int N;
+    static int M;
+    static int[][] arr;
+    static boolean[][] visited;
+    static Queue<int[]> queue;
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        int testCount = Integer.parseInt(br.readLine());
 
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-        
-        int T = sc.nextInt();
-
-        for (int t = 0; t < T; t++) {
-            // 배추밭 가로, 세로, 배추수
-            M = sc.nextInt();
-            N = sc.nextInt();
-            K = sc.nextInt();
-
-            // 배추밭 초기화
-            farm = new int[N][M];
+        for (int j = 0; j < testCount; j++) {
+            String[] s = br.readLine().split(" ");
+            N = Integer.parseInt(s[0]);
+            M = Integer.parseInt(s[1]);
+            arr = new int[N][M];
             visited = new boolean[N][M];
-
-            // 배추 위치 입력 및 배추밭 배열에 배추 표시
+            int K = Integer.parseInt(s[2]);
             for (int i = 0; i < K; i++) {
-                int x = sc.nextInt();
-                int y = sc.nextInt();
-                farm[y][x] = 1;
+                String[] str = br.readLine().split(" ");
+                arr[Integer.parseInt(str[0])][Integer.parseInt(str[1])] = 1;
             }
-
-            // 지렁이 수
-            int worms = 0;
-
-            // 배추밭의 모든 위치를 탐색
+            int count = 0;
             for (int i = 0; i < N; i++) {
-                for (int j = 0; j < M; j++) {
-                    // 배추가 있고 방문하지 않은 경우
-                    if (farm[i][j] == 1 && !visited[i][j]) {
-                        // dfs를 통해 연결된 모든 배추 방문 처리
-                        dfs(i, j);
-                        // 지렁이 수 증가
-                        worms++;
+                for (int k = 0; k < M; k++) {
+                    if (arr[i][k] == 1 && !visited[i][k]) {
+                        bfs(i, k);
+                        count++;
                     }
                 }
             }
-            System.out.println(worms);
+            System.out.println(count);
         }
-        sc.close();
+
+
+
     }
 
-    
-    public static void dfs(int x, int y) {
-        // 현재 위치 방문
+    public static void bfs(int x, int y) {
+        queue = new LinkedList<>();
+        queue.add(new int[]{x, y});
         visited[x][y] = true;
-
-        
-        for (int i = 0; i < 4; i++) {
-            int nx = x + dx[i];
-            int ny = y + dy[i];
-
-            //  범위를 넘지 않고 다음 위치가 배추이고 방문하지 않은 경우 -> 다음 위치로 dfs
-            if (nx >= 0 && ny >= 0 && nx < N && ny < M) {
-                if (farm[nx][ny] == 1 && !visited[nx][ny]) {
-                    dfs(nx, ny);
+        while (!queue.isEmpty()) {
+            int[] current = queue.poll();
+            int cx = current[0];
+            int cy = current[1];
+            for (int i = 0; i < dx.length; i++) {
+                int nx = cx + dx[i];
+                int ny = cy + dy[i];
+                if (nx >= 0 && nx < N && ny >= 0 && ny < M && arr[nx][ny] == 1 && !visited[nx][ny]) {
+                    queue.add(new int[]{nx, ny});
+                    visited[nx][ny] = true;
                 }
             }
         }
