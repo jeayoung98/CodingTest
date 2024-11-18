@@ -23,10 +23,9 @@ public class Main {
                 set.add(Integer.valueOf(s[j]));
             }
         }
-        int[] array = set.stream().mapToInt(Integer::intValue).toArray();
-        range = new int[]{array[0], array[array.length - 1]};
+        int max = set.stream().mapToInt(Integer::intValue).max().orElse(0);
         List<Integer> list = new ArrayList<>();
-        for (int k = 0; k <= range[1]; k++) {
+        for (int k = 0; k <= max; k++) {
             int count = 0;
             visited = new boolean[N][N];
             for (int i = 0; i < N; i++) {
