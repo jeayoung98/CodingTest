@@ -48,6 +48,6 @@ public class Main {
         while (!queue.isEmpty()) {
             sb.append(queue.poll()).append(" ");
         }
-        System.out.println(sb.toString().trim());
+        System.out.println(sb.toString());
     }
 }
