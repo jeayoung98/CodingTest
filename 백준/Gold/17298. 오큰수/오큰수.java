@@ -8,17 +8,16 @@ public class Main {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         int n = Integer.parseInt(br.readLine());
         String[] input = br.readLine().split(" ");
-        int[] A = new int[n];
-
+        int[] a = new int[n];
         for (int i = 0; i < n; i++) {
-            A[i] = Integer.parseInt(input[i]);
+            a[i] = Integer.parseInt(input[i]);
         }
 
         int[] result = new int[n];
         Stack<Integer> stack = new Stack<>();
 
         for (int i = n - 1; i >= 0; i--) {
-            while (!stack.isEmpty() && stack.peek() <= A[i]) {
+            while (!stack.isEmpty() && stack.peek() <= a[i]) {
                 stack.pop();
             }
 
@@ -27,7 +26,7 @@ public class Main {
             } else {
                 result[i] = stack.peek();
             }
-            stack.push(A[i]);
+            stack.push(a[i]);
         }
 
         StringBuilder sb = new StringBuilder();
