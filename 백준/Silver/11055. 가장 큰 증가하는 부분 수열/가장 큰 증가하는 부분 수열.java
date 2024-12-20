@@ -1,27 +1,60 @@
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.Arrays;
+import java.io.*;
+import java.util.*;
 
 public class Main {
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-
         int N = Integer.parseInt(br.readLine());
-        long[] dp = new long[N];
-        int[] arr = Arrays.stream(br.readLine().split(" ")).mapToInt(Integer::parseInt).toArray();
+        String[] arr = br.readLine().split(" ");
+        int[] A = new int[N];
         for(int i = 0; i < N; i++) {
-            dp[i] = arr[i];
+            A[i] = Integer.parseInt(arr[i]);
         }
 
+        int maxA = Arrays.stream(A).max().orElse(-1);
+
+        FenwickTree ft = new FenwickTree(maxA);
+
+        long[] dp = new long[N];
+        long answer = 0;
+
         for(int i = 0; i < N; i++) {
-            for(int j = 0; j < i; j++) {
-                if(arr[j] < arr[i]) {
-                    dp[i] = Math.max(dp[i], dp[j] + arr[i]);
+            long maxSum = ft.query(A[i] - 1);
+            dp[i] = maxSum + A[i];
+            ft.update(A[i], dp[i]);
+            if(dp[i] > answer) answer = dp[i];
+        }
+
+        System.out.println(answer);
+    }
+    static class FenwickTree {
+        int size;
+        long[] tree;
+
+        FenwickTree(int size) {
+            this.size = size;
+            tree = new long[size + 1];
+            Arrays.fill(tree, 0);
+        }
+
+        void update(int index, long value) {
+            while (index <= size) {
+                if (tree[index] < value) {
+                    tree[index] = value;
                 }
+                index += index & -index;
             }
         }
 
-        System.out.println(Arrays.stream(dp).max().orElse(-1));
+        long query(int index) {
+            long result = 0;
+            while (index > 0) {
+                if (result < tree[index]) {
+                    result = tree[index];
+                }
+                index -= index & -index;
+            }
+            return result;
+        }
     }
 }
