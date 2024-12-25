@@ -12,12 +12,12 @@ public class Main {
         int[] snacks = Arrays.stream(br.readLine().split(" ")).mapToInt(Integer::parseInt).toArray();
 
         Arrays.sort(snacks);
-        long result = getResult(snacks, N, M);
+        int result = getResult(snacks, N, M);
 
         System.out.println(result);
     }
 
-    private static long getResult(int[] snacks, int N, int M) {
+    private static int getResult(int[] snacks, int N, int M) {
         int max = snacks[snacks.length - 1];
 
         int left = 1;
