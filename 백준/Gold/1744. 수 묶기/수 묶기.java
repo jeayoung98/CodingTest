@@ -50,11 +50,8 @@ public class Main {
             result += first * second;
         }
 
-        if (!negativeQueue.isEmpty()) {
-            if (countZeros > 0) {
-            } else {
-                result += negativeQueue.poll();
-            }
+        if (!negativeQueue.isEmpty() && countZeros <= 0) {
+            result += negativeQueue.poll();
         }
 
         System.out.println(result);
