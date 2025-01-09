@@ -1,7 +1,7 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.*;
+import java.util.Arrays;
 
 public class Main {
     public static void main(String[] args) throws IOException {
@@ -13,16 +13,22 @@ public class Main {
         int[] array = Arrays.stream(br.readLine().split(" ")).mapToInt(Integer::parseInt).toArray();
 
         int result = 0;
-        for (int i = 0; i < N; i++) {
-            int currentSum = array[i];
-            if (currentSum == M) result++;
-            for (int j = i + 1; j < N; j++) {
-                currentSum += array[j];
-                if (currentSum == M) result++;
-                else if (currentSum > M) break;
+        int start = 0;
+        int end = 0;
+        int currentSum = 0;
+
+        while (end <= N) {
+            if (currentSum < M) {
+                if (end < N) currentSum += array[end++];
+                else break;
+            } else if (currentSum == M) {
+                result++;
+                currentSum -= array[start++];
+            } else {
+                currentSum -= array[start++];
             }
         }
-        System.out.println(result);
 
+        System.out.println(result);
     }
 }
