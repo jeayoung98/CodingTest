@@ -4,7 +4,6 @@ class Solution {
     public int solution(String begin, String target, String[] words) {
 
         return bfs(begin,target,words);
-
     }
 
     public int bfs(String begin, String target,String[] words){
