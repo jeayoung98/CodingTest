@@ -36,7 +36,6 @@ public class Main {
                 queue.add(i);
             }
         }
-
         while(!queue.isEmpty()) {
             int current = queue.poll();
             int selected = select[current];
@@ -45,14 +44,12 @@ public class Main {
                 queue.add(selected);
             }
         }
-
         int count = 0;
         for(int i = 1; i <= M; i++) {
             if(result[i] >= 1) {
                 count++;
             }
         }
-
         return M - count;
     }
 }
