@@ -13,7 +13,6 @@ class Solution {
         for (int i = 1; i < arrayB.length; i++) {
             gcdB = gcd(gcdB, arrayB[i]);
         }
-        
         List<Integer> factorsA = findFactors(gcdA);
         List<Integer> factorsB = findFactors(gcdB);
         
