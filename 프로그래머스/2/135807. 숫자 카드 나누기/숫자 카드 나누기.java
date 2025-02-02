@@ -20,38 +20,29 @@ class Solution {
         Collections.sort(factorsA, Collections.reverseOrder());
         Collections.sort(factorsB, Collections.reverseOrder());
         
-        int candidateA = 0;
-        for (int factor : factorsA) {
-            boolean valid = true;
-            for (int num : arrayB) {
-                if (num % factor == 0) {
-                    valid = false;
-                    break;
-                }
-            }
-            if (valid) {
-                candidateA = factor;
-                break;
-            }
-        }
-        
-        int candidateB = 0;
-        for (int factor : factorsB) {
-            boolean valid = true;
-            for (int num : arrayA) {
-                if (num % factor == 0) {
-                    valid = false;
-                    break;
-                }
-            }
-            if (valid) {
-                candidateB = factor;
-                break;
-            }
-        }
+        int candidateA = aa(factorsA, arrayB);
+        int candidateB = aa(factorsB, arrayA);
         
         answer = Math.max(candidateA, candidateB);
         return answer;
+    }
+    
+    public int aa(List<Integer> factors, int[] array){
+        int result = 0;
+        for (int factor : factors) {
+            boolean valid = true;
+            for (int num : array) {
+                if (num % factor == 0) {
+                    valid = false;
+                    break;
+                }
+            }
+            if (valid) {
+                result = factor;
+                break;
+            }
+        }
+        return result;
     }
     
     public List<Integer> findFactors(int x) {
