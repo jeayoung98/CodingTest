@@ -4,20 +4,20 @@ class Solution {
     public int solution(int storey) {
         floor = storey;
         do {
-            System.out.println(floor);
+            // System.out.println(floor);
             int value = floor % 10;
             floor /= 10;
             move(value);
         } while(floor != 0);
         return answer;
     }
-
-    private boolean isRoundedUp(int value) {
+    
+    public boolean isRoundedUp(int value) {
         if(floor % 10 >= 5  && value == 5) return true;
         return value > 5;
     }
 
-    private void move(int value) {
+    public void move(int value) {
         if(isRoundedUp(value)) {
             answer += (10 - value);
             floor += 1;
