@@ -64,7 +64,7 @@ class Solution {
         String result = "";
         for(int i = 0; i < time; i++){
             result += arr[i % sound.length()];
-        }
+        } 
         return result;
     }
 }
