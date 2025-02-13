@@ -2,7 +2,7 @@ class Solution {
     int answer = 0;
     int floor;
     public int solution(int storey) {
-        floor = storey;
+        floor = storey; 
         do {
             // System.out.println(floor);
             int value = floor % 10;
