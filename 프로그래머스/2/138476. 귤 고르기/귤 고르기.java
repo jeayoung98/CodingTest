@@ -7,7 +7,6 @@ class Solution {
         for(int i = 0; i < tangerine.length; i++){
             map.put(tangerine[i], map.getOrDefault(tangerine[i], 0)+1);
         }
-        
         int[] sortedArr = Arrays.stream(tangerine)
                                 .boxed()
                                 .sorted((a,b)-> map.get(b) - map.get(a))
