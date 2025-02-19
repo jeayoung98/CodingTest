@@ -1,42 +1,32 @@
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class Main {
     public static void main(String[] args) throws IOException {
-        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-        reader.readLine();
-        String[] str = reader.readLine().split(" ");
-        int[] i = Arrays.stream(str)
-                .mapToInt(Integer::parseInt)
-                .toArray();
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        int[] N = Arrays.stream(br.readLine().split(" ")).mapToInt(Integer::parseInt).toArray();
+        Map<String, Integer> map = new HashMap<>();
+        Map<String, Integer> map1 = new HashMap<>();
 
-        // 빈도 수 저장
-        Map<Integer, Integer> map = new HashMap<>();
-        for (int k : i) {
-            map.put(k, map.getOrDefault(k, 0) + 1);
+        String[] arr = br.readLine().split(" ");
+        for (int i = 0; i < arr.length; i++) {
+            map.put(arr[i], map.getOrDefault(arr[i],0) + 1);
+            int j = i;
+            map1.computeIfAbsent(arr[i], a -> j);
         }
 
-        // 중복 값 제거
-        int[] j = Arrays.stream(i).distinct().toArray();
-
-        // 나온 순서
-        Map<Integer, Integer> map1 = new HashMap<>();
-        for (int x = 0; x < j.length; x++) {
-            map1.put(j[x], x);
-        }
-
-        List<Integer> list = Arrays.stream(i).boxed().sorted(
-                (a, b) -> {
-                    if (map.get(a) != map.get(b)) {
-                        return map.get(b) - map.get(a);
-                    } else return map1.get(a) - map1.get(b);
-                }
-        ).collect(Collectors.toList());
+        Arrays.sort(arr, (a, b) -> {
+            if (map.get(b) == map.get(a)) {
+                return map1.get(a) - map1.get(b);
+            }
+            return map.get(b) - map.get(a);
+        });
 
         StringBuilder sb = new StringBuilder();
-        for (int x : list) {
-            sb.append(x+" ");
+        for (String s : arr) {
+            sb.append(s).append(" ");
         }
         System.out.println(sb.toString().trim());
     }
