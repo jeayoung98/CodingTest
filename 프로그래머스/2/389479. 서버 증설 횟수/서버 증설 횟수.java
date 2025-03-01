@@ -25,7 +25,7 @@ class Solution {
                 answer++;
             }
         }
-    }
+    } 
     
     public void endServer(){
         while(!queue.isEmpty() && queue.peek() <= time){
