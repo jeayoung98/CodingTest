@@ -9,7 +9,6 @@ class Solution {
 
         while(left <= right){
             int currentLevel = (left + right) / 2;
-
             long currentTime = 0;
             for(int i = 0; i < diffs.length; i++){
                 if(diffs[i] <= currentLevel) {
