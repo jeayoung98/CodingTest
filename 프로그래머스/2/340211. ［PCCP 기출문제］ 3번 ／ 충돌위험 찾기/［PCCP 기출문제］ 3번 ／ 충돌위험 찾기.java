@@ -11,7 +11,6 @@ class Solution {
         
         for(int i = 0; i < routes.length; i++){
             currentPoint.put(i, new int[]{points[routes[i][0]-1][0], points[routes[i][0]-1][1]});
-            
             goal.put(i, new LinkedList<>());
             for(int j = 1; j < routes[i].length; j++){
                 goal.get(i).add(routes[i][j]);
