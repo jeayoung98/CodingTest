@@ -1,7 +1,7 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.*;
+import java.util.Arrays;
 
 public class Main {
     static int N, M;
@@ -13,18 +13,18 @@ public class Main {
         String[] s = br.readLine().split(" ");
         N = Integer.parseInt(s[0]);
         M = Integer.parseInt(s[1]);
-        String[] s1 = br.readLine().split(" ");
-        arr = new int[N];
+        arr = Arrays.stream(br.readLine().split(" ")).mapToInt(Integer::parseInt).toArray();
         result = new int[M];
-        for (int i = 0; i < N; i++) {
-            arr[i] = Integer.parseInt(s1[i]);
-        }
         Arrays.sort(arr);
-        dfs(0,0);
+        for (int i = 0; i < N; i++) {
+            dfs(i, 1);
+        }
+
         System.out.println(sb.toString());
     }
 
-    public static void dfs(int start,int depth) {
+    public static void dfs(int start, int depth) {
+        result[0] = arr[start];
         if (depth == M) {
             for (int i = 0; i < M; i++) {
                 sb.append(result[i]).append(" ");
@@ -32,9 +32,10 @@ public class Main {
             sb.append("\n");
             return;
         }
-        for (int i = start; i < N; i++) {
+
+        for (int i = depth == 0 ? start : Arrays.binarySearch(arr,result[depth - 1]); i < N; i++) {
             result[depth] = arr[i];
-            dfs(i,depth + 1);
+            dfs(start, depth + 1);
         }
     }
 }
