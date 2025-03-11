@@ -4,7 +4,7 @@ import java.io.InputStreamReader;
 import java.util.Arrays;
 
 public class Main {
-    static int N,M;
+    static int N, M;
     static int[] arr;
     static int[] result;
     static StringBuilder sb = new StringBuilder();
@@ -14,24 +14,24 @@ public class Main {
         N = Integer.parseInt(s[0]);
         M = Integer.parseInt(s[1]);
         arr = Arrays.stream(br.readLine().split(" ")).mapToInt(Integer::parseInt).toArray();
-        Arrays.sort(arr);
         result = new int[M];
+        Arrays.sort(arr);
         dfs(0);
         System.out.println(sb.toString());
     }
 
     public static void dfs(int depth) {
         if (depth == M) {
-            for (int i = 0; i < result.length; i++) {
+            for (int i = 0; i < M; i++) {
                 sb.append(result[i]).append(" ");
             }
             sb.append("\n");
             return;
         }
+
         for (int i = 0; i < N; i++) {
             result[depth] = arr[i];
-            dfs( depth + 1);
-
+            dfs(depth + 1);
         }
     }
 }
