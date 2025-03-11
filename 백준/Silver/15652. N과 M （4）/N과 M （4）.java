@@ -6,30 +6,28 @@ public class Main {
     static int N, M;
     static int[] arr;
     static StringBuilder sb = new StringBuilder();
-
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         String[] s = br.readLine().split(" ");
         N = Integer.parseInt(s[0]);
         M = Integer.parseInt(s[1]);
-
         arr = new int[M];
-        dfs(0, 1);
-        System.out.print(sb.toString());
+        dfs(0);
+        System.out.println(sb.toString());
     }
 
-    static void dfs(int depth, int start) {
+    public static void dfs(int depth) {
         if (depth == M) {
             for (int i = 0; i < M; i++) {
-                sb.append(arr[i]).append(' ');
+                sb.append(arr[i]).append(" ");
             }
-            sb.append('\n');
+            sb.append("\n");
             return;
         }
 
-        for (int i = start; i <= N; i++) {
+        for (int i = depth == 0 ? 1 : arr[depth - 1]; i <= N; i++) {
             arr[depth] = i;
-            dfs(depth + 1, i);
+            dfs(depth + 1);
         }
     }
 }
