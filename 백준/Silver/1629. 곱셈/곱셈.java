@@ -1,26 +1,31 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.Arrays;
 
 public class Main {
+    static long N, M, K;
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        String[] s = br.readLine().split(" ");
+        int[] array = Arrays.stream(br.readLine().split(" ")).mapToInt(Integer::parseInt).toArray();
 
-        long N = Long.parseLong(s[0]);
-        long M = Long.parseLong(s[1]);
-        long K = Long.parseLong(s[2]);
-        
-        long result = 1;
-        N = N % K;
+        N = array[0];
+        M = array[1];
+        K = array[2];
 
-        while (M > 0) {
-            if ((M & 1) == 1) {
-                result = (result * N) % K;
-            }
-            N = (N * N) % K;
-            M = M >> 1;
+        System.out.println(pow(M));
+    }
+
+    public static long pow(long depth) {
+        if (depth == 0L) return 1;
+        if (depth == 1L) return N % K;
+        long half = pow(depth / 2);
+        long result = (half * half) % K;
+
+        if (depth % 2 == 1) {
+            result = (result * (N % K)) % K;
         }
-        System.out.println(result);
+
+        return result;
     }
 }
