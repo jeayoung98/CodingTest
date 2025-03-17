@@ -55,7 +55,6 @@ class Solution {
                 if(current.equals("O")) oWin = true;
                 else if(current.equals("X")) xWin = true;
             }
-            System.out.println(oWin);
         }
         
         // 각 행 체크
@@ -72,7 +71,6 @@ class Solution {
                 if(current.equals("O")) oWin = true;
                 else if(current.equals("X")) xWin = true;
             }
-            System.out.println(oWin);
         }
         // 대각선 체크
         String current1 = arr[0][0];
@@ -80,14 +78,12 @@ class Solution {
             if(current1.equals("O")) oWin = true;
             else if(current1.equals("X")) xWin = true;
         } 
-        System.out.println(oWin);
         
         String current2 = arr[0][2];
         if(current2.equals(arr[1][1]) && current2.equals(arr[2][0])){
             if(current2.equals("O")) oWin = true;
             else if(current2.equals("X")) xWin = true;
         }
-        System.out.println(oWin);
         
         if(oWin && xWin) return 0;
         else if(oWin) return 1;
