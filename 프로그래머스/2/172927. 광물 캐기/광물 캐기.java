@@ -30,9 +30,6 @@ class Solution {
                     break;
                 }
             }
-            if(currentPick == -1){
-                break;
-            }
 
             for(int i = 0; i < 5; i++){
                 String currentMineral = mineralArr[currentIndex][i];
@@ -64,8 +61,8 @@ class Solution {
         for(int i = 0; i < arr.length; i++){
             if(arr[i] == null) break;
             
-            if(arr[i].equals("diamond")) sum += 25;
-            else if(arr[i].equals("iron")) sum += 5;
+            if(arr[i].equals("diamond")) sum += 31;
+            else if(arr[i].equals("iron")) sum += 6;
             else sum += 1;
         }
         return new int[] {sum, index};
