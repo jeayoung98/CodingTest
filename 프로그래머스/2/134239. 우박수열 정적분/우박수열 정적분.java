@@ -8,7 +8,7 @@ class Solution {
             this.y = y;
         }
     }
-    
+
     public double[] solution(int k, int[][] ranges) {
         double[] answer = new double[ranges.length];
         List<Point> points = new ArrayList<>();
