@@ -12,7 +12,6 @@ class Solution {
         int n = land.length;
         int m = land[0].length;
         arr = new int[n][m];
-        
         sizes = new int[n * m + 1];
         
         for(int i = 0; i < n; i++) {
