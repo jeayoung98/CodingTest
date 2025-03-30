@@ -3,7 +3,7 @@ import java.util.*;
 class Solution {
     public int solution(int[] diffs, int[] times, long limit) {
         int answer = 0;
-        
+    
         int left = 1;
         int right = Arrays.stream(diffs).max().orElse(1);
 
