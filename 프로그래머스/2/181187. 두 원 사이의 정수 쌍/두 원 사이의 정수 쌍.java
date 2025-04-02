@@ -6,7 +6,6 @@ class Solution {
         
         for (int x = -r2; x <= r2; x++) {
             long width = (long) x * x;
-
             int min = (int) Math.ceil((width1 > width) ? Math.sqrt(width1 - width) : 0.0);
             int max = (int) Math.floor(Math.sqrt(width2 - width));
 
