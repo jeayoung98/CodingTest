@@ -10,7 +10,7 @@ class Solution {
         dfs(0);
         return answer;
     }
-    
+
     public void dfs(int depth){
         if(depth == N){
             answer++;
