@@ -41,7 +41,7 @@ public class Main {
 
         // 기본 고속도로 간선: 인접 노드 간 거리
         List<Integer> sorted = new ArrayList<>(set);
-        Collections.sort(sorted);
+//        Collections.sort(sorted);
         for (int i = 0; i < sorted.size() - 1; i++) {
             int u = sorted.get(i);
             int v = sorted.get(i + 1);
