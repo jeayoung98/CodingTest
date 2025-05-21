@@ -80,14 +80,14 @@ class Solution {
 
             else if(arr[x][y].equals("0")){
                 for (int i = 0; i < dx.length; i++) {
-                int nx = x + dx[i];
-                int ny = y + dy[i];
+                    int nx = x + dx[i];
+                    int ny = y + dy[i];
 
-                if (nx >= 0 && nx < n && ny >= 0 && ny < m && !visited[nx][ny]) {
-                    visited[nx][ny] = true;
-                    queue.add(new int[]{nx, ny});
+                    if (nx >= 0 && nx < n && ny >= 0 && ny < m && !visited[nx][ny]) {
+                        visited[nx][ny] = true;
+                        queue.add(new int[]{nx, ny});
+                    }
                 }
-            }
         }
             
         }
