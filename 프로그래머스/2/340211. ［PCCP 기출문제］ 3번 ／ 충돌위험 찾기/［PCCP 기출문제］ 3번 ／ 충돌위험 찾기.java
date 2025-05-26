@@ -39,7 +39,6 @@ class Solution {
         for(int i : currentPoint.keySet()){
             int[] current = currentPoint.get(i);
             int[] target = currentGoal[i];
-            
             if(current[0] == target[0] && current[1] == target[1]){
                 Queue<Integer> queue = goal.get(i);
                 if(!queue.isEmpty()){
