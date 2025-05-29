@@ -1,63 +1,61 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.*;
 
 public class Main {
-    private static int[] dx = {0, 0, -1, 1};
-    private static int[] dy = {1, -1, 0, 0};
-    private static boolean[][] visited;
-    private static int[][] arr;
-    private static Queue<int[]> queue;
+    static int count, max;
+    static int[] dx = new int[]{0, 0, -1, 1};
+    static int[] dy = new int[]{1, -1, 0, 0};
+    static boolean[][] visited;
+    static Queue<int[]> queue;
+    static int[][] arr;
+    static int N, M;
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        int[] a = Arrays.stream(br.readLine().split(" ")).mapToInt(Integer::parseInt).toArray();
+        N = a[0];
+        M = a[1];
 
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-        int n = sc.nextInt();
-        int m = sc.nextInt();
-        arr = new int[n][m];
-        visited = new boolean[n][m];
-
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < m; j++) {
-                arr[i][j] = sc.nextInt();
-            }
+        arr = new int[N][M];
+        visited = new boolean[N][M];
+        for (int i = 0; i < N; i++) {
+            arr[i] = Arrays.stream(br.readLine().split(" ")).mapToInt(Integer::parseInt).toArray();
         }
 
-        int count = 0;
-        int maxSize = 0;
-
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < m; j++) {
-                if (!visited[i][j] && arr[i][j] == 1) {
-                    int size = bfs(i, j);
-                    count++;
-                    maxSize = Math.max(maxSize, size);
+        for (int i = 0; i < N; i++) {
+            for (int j = 0; j < M; j++) {
+                if (arr[i][j] == 1 && !visited[i][j]) {
+                    bfs(i,j);
                 }
             }
         }
-        System.out.println(count);
-        System.out.println(maxSize);
+        StringBuilder sb = new StringBuilder();
+        sb.append(count).append("\n").append(max);
+        System.out.println(sb.toString());
+
     }
 
-    public static int bfs(int x, int y) {
+    public static void bfs(int x, int y) {
         queue = new LinkedList<>();
         queue.add(new int[]{x, y});
         visited[x][y] = true;
-        int size = 0;
-
+        int extent = 1;
         while (!queue.isEmpty()) {
             int[] current = queue.poll();
-            int cx = current[0];
-            int cy = current[1];
-            size++;
-            
+            int nx = current[0];
+            int ny = current[1];
             for (int i = 0; i < dx.length; i++) {
-                int nx = cx + dx[i];
-                int ny = cy + dy[i];
-                
-                if (nx >= 0 && nx < arr.length && ny >= 0 && ny < arr[0].length && arr[nx][ny] == 1 && !visited[nx][ny]) {
-                    visited[nx][ny] = true;
-                    queue.add(new int[]{nx, ny});
+                int cx = nx + dx[i];
+                int cy = ny + dy[i];
+                if (cx >= 0 && cx < N && cy >= 0 && cy < M && !visited[cx][cy] && arr[cx][cy] == 1) {
+                    visited[cx][cy] = true;
+                    queue.add(new int[]{cx, cy});
+                    extent += 1;
                 }
             }
         }
-        return size;
+        max = Math.max(extent, max);
+        count++;
     }
 }
