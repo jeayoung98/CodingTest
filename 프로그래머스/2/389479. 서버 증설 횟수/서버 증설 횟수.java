@@ -10,7 +10,7 @@ class Solution {
             int currentPlayer = players[i];
             endServer();
             addServer(currentPlayer);
-            time++;
+            time++; 
         }
         return answer;
     }
