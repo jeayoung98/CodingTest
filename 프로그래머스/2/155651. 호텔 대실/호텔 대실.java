@@ -15,7 +15,7 @@ class Solution {
         return queue.size();
     }
 
-    private int toMinutes(String time) {
+    public int toMinutes(String time) {
         String[] parts = time.split(":");
         return Integer.parseInt(parts[0]) * 60 + Integer.parseInt(parts[1]);
     }
