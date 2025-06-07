@@ -65,7 +65,7 @@ class Solution {
         }
         
         return answer.toArray(new String[0]);
-    }
+    } 
     
     public int convertToMin(String time) {
         String[] parts = time.split(":");
