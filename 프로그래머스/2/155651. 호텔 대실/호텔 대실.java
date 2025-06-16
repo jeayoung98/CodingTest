@@ -8,7 +8,7 @@ class Solution {
             int start = toMinutes(time[0]);
             int end = toMinutes(time[1]) + 10;
             if (!queue.isEmpty() && queue.peek() <= start) {
-                queue.poll();
+                queue.poll(); 
             }
             queue.add(end);
         }
