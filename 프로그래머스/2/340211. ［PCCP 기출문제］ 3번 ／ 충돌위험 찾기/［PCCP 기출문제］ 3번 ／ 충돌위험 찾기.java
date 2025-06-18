@@ -87,5 +87,5 @@ class Solution {
 
     public boolean isDone(){
         return currentPoint.isEmpty();
-    }
+    } 
 }
