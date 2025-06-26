@@ -8,7 +8,7 @@ class Solution {
     public int solution(int[][] points, int[][] routes) {
         int answer = 0;
         currentGoal = new int[routes.length][2];
-        
+    
         for(int i = 0; i < routes.length; i++){
             currentPoint.put(i, new int[]{points[routes[i][0]-1][0], points[routes[i][0]-1][1]});
             goal.put(i, new LinkedList<>());
