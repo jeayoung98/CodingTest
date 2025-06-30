@@ -9,7 +9,7 @@ class Solution {
 
         for (int[] route : routes) {
             if (route[0] > camera) {
-                answer++;
+                answer++; 
                 camera = route[1];
             }
         }
