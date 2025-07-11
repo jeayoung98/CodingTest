@@ -28,7 +28,7 @@ class Solution {
             double area = (y1 + y2) / 2.0;
             areas[i + 1] = areas[i] + area;
         }
-        
+    
         for (int i = 0; i < ranges.length; i++) {
             int a = ranges[i][0];
             int b = ranges[i][1];
