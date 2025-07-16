@@ -7,12 +7,8 @@ class Solution {
             map.put(name[i],yearning[i]);
         }
         for(int i = 0 ; i < photo.length; i++){
-            for(int j = 0 ; j < photo[i].length; j++){
-                try{
-                    answer[i] += map.get(photo[i][j]);
-                }catch(Exception e){
-                }
-                
+            for(int j = 0 ; j < photo[i].length; j++){        
+                   answer[i] += map.getOrDefault(photo[i][j],0);
             }
         }
         return answer;
