@@ -11,7 +11,7 @@ class Solution {
             endServer();
             addServer(currentPlayer);
             time++; 
-        }
+        } 
         return answer;
     }
     
