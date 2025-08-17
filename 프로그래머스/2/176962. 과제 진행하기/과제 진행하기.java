@@ -10,7 +10,7 @@ class Solution {
             this.start = start;
             this.playtime = playtime;
         }
-    }
+    } 
     
     public String[] solution(String[][] plans) {
         int n = plans.length;
