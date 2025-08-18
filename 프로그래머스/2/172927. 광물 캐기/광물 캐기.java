@@ -63,7 +63,7 @@ class Solution {
             
             if(arr[i].equals("diamond")) sum += 31;
             else if(arr[i].equals("iron")) sum += 6;
-            else sum += 1;
+            else sum += 1; 
         }
         return new int[] {sum, index};
     }
