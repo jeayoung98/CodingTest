@@ -8,7 +8,7 @@ public class Solution {
         for (char dir : dirs.toCharArray()) {
             int nx = x, ny = y;
 
-            if (dir == 'U' && y < 5) ny++;
+            if (dir == 'U' && y < 5) ny++; 
             else if (dir == 'D' && y > -5) ny--;
             else if (dir == 'R' && x < 5) nx++;
             else if (dir == 'L' && x > -5) nx--;
