@@ -1,26 +1,36 @@
 import java.util.*;
 
 class Solution {
-    public int solution(int bridge_length, int weight, int[] truck_weights) { 
-        int totalWeight = 0;
+    public class Truck {
+        int weight, exitAt;
+        Truck(int weight, int exitAt) {
+            this.weight = weight;
+            this.exitAt = exitAt;
+        }
+    }
+    public int solution(int bridge_length, int weight, int[] truck_weights) {
+        Deque<Integer> waiting = new ArrayDeque<>();
+        for (int i = 0; i < truck_weights.length; i++) waiting.add(truck_weights[i]);
+        Deque<Truck> deque = new ArrayDeque<>();
         int answer = 0;
-        Deque<Integer> bridge = new ArrayDeque<>();
-        int i = 0;
+        int sum = 0;
 
-        while (i < truck_weights.length) {
+        while (!waiting.isEmpty() || !deque.isEmpty()) {
             answer++;
-            if (bridge.size() == bridge_length) {
-                totalWeight -= bridge.pollFirst();
+            
+            while (!deque.isEmpty() && deque.peek().exitAt == answer) {
+                sum -= deque.poll().weight;
             }
-
-            if (totalWeight + truck_weights[i] <= weight && bridge.size() < bridge_length) {
-                bridge.add(truck_weights[i]);
-                totalWeight += truck_weights[i];
-                i++;
-            } else {
-                bridge.add(0);
+            
+            if (!waiting.isEmpty()) {
+                int next = waiting.peek();
+                if (sum + next <= weight && deque.size() < bridge_length) {
+                    waiting.poll();
+                    sum += next;
+                    deque.add(new Truck(next, answer + bridge_length));
+                }
             }
         }
-        return answer + bridge_length;
+        return answer;
     }
 }
