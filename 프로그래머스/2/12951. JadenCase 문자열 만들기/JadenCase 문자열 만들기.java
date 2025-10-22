@@ -1,18 +1,22 @@
-import java.util.*;
-import java.util.stream.*;
 class Solution {
     public String solution(String s) {
-        String[] strArr = s.split(" ",-1);
-        
-        String[] capitalizedArr = Arrays.stream(strArr)
-                .map(str -> {
-                    String lowerStr = str.toLowerCase();
-                    return IntStream.range(0, lowerStr.length())
-                            .mapToObj(i -> i == 0 ? String.valueOf(Character.toUpperCase(lowerStr.charAt(i))) : String.valueOf(lowerStr.charAt(i)))
-                            .collect(Collectors.joining());
-                })
-                .toArray(String[]::new);
-        
-        return String.join(" ", capitalizedArr);
+        StringBuilder answer = new StringBuilder();
+        boolean isStart = true;
+
+        for (char c : s.toCharArray()) {
+            if (isStart && Character.isLetter(c)) {
+                answer.append(Character.toUpperCase(c));
+                isStart = false;
+            } else if (isStart && Character.isDigit(c)) {
+                answer.append(c);
+                isStart = false;
+            } else {
+                answer.append(Character.toLowerCase(c));
+            }
+
+            if (c == ' ') isStart = true;
+        }
+
+        return answer.toString();
     }
 }
