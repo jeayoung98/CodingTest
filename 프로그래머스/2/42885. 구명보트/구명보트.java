@@ -4,12 +4,13 @@ class Solution {
     public int solution(int[] people, int limit) {
         int answer = 0;
         Arrays.sort(people);
-        int max = people.length - 1;
-        for(int i = 0; i <= max; i++){
-            if(people[i] + people[max] > limit){
-                i--;
+        int left = 0, right = people.length - 1;
+        
+        while (left <= right) {
+            if (people[left] + people[right] <= limit) {
+                left++;
             }
-            max--;
+            right--;
             answer++;
         }
         return answer;
