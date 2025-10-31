@@ -1,8 +1,7 @@
 -- 코드를 작성해주세요
-SELECT ID, EMAIL, FIRST_NAME, LAST_NAME
-FROM DEVELOPERS
-WHERE SKILL_CODE & (
-    (SELECT CODE FROM SKILLCODES WHERE NAME = 'Python') | 
-    (SELECT CODE FROM SKILLCODES WHERE NAME = 'C#')
-) <> 0
-ORDER BY ID;
+SELECT distinct d.id, d.email, d.first_name, d.last_name
+FROM developers d
+JOIN skillcodes s
+  ON (d.skill_code & s.code) = s.code
+WHERE s.name IN ('Python', 'C#')
+ORDER BY d.id ASC;
