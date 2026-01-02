@@ -5,7 +5,7 @@ class Solution
 {
 	public static void main(String args[]) throws Exception
 	{
-		        Scanner sc = new Scanner(System.in);
+        Scanner sc = new Scanner(System.in);
         long T = sc.nextLong();
         StringBuilder sb = new StringBuilder();
         for (int i = 1; i <= T; i++) {
@@ -18,26 +18,20 @@ class Solution
             for (int j = 0; j < N-1; j++) {
                 arr[j] = sc.nextLong() - 1L;
             }
-            boolean flag = true;
-            while (flag) {
-                boolean currentFlag = false;
-                for (int k = 0; k < arr.length; k++) {
-                    if (!visited[k]) {
-                        long currentNum = arr[k];
-                        visited[k] = true;
-                        currentFlag = true;
-                        for (int q = k + 1; q < arr.length; q++) {
-                            if (!visited[q] && arr[q] % currentNum == 0) {
-                                visited[q] = true;
-                            }
-                        }
 
-                        boat++;
-                        break;
+            for (int k = 0; k < arr.length; k++) {
+                if (!visited[k]) {
+                    long currentNum = arr[k];
+                    visited[k] = true;
+
+                    for (int q = k + 1; q < arr.length; q++) {
+                        if (!visited[q] && arr[q] % currentNum == 0) {
+                            visited[q] = true;
+                        }
                     }
 
+                    boat++;
                 }
-                flag = currentFlag;
             }
             sb.append(boat).append("\n");
         }
