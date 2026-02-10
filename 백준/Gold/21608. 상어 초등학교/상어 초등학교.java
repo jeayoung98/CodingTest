@@ -1,153 +1,111 @@
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.util.*;
 
 public class Main {
-    static int[] dx = {0, 0, 1, -1};
-    static int[] dy = {1, -1, 0, 0};
-    static int[][] arr;
-    static int N;
-    static List<int[]> candidateList;
-    static int result = 0;
-    static Map<Integer, List<Integer>> map;
+    static int N, M;
+    static int[][] seat;
+    static boolean[][] like;
 
-    public static void main(String[] args) throws IOException {
+    // 상, 하, 좌, 우 (순서 상관 없음)
+    static final int[] dx = {-1, 1, 0, 0};
+    static final int[] dy = {0, 0, -1, 1};
+
+    public static void main(String[] args) throws Exception {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        StringTokenizer st = new StringTokenizer(br.readLine());
-        N = Integer.parseInt(st.nextToken());
 
-        arr = new int[N][N];
-        map = new HashMap<>();
+        N = Integer.parseInt(br.readLine().trim());
+        M = N * N;
 
-        for (int i = 0; i < N * N; i++) {
-            st = new StringTokenizer(br.readLine());
-            int currentStd = Integer.parseInt(st.nextToken());
+        seat = new int[N][N];
+        like = new boolean[M + 1][M + 1];
 
-            List<Integer> likes = new ArrayList<>(4);
-            for (int j = 0; j < 4; j++) {
-                likes.add(Integer.parseInt(st.nextToken()));
+        for (int i = 0; i < M; i++) {
+            StringTokenizer st = new StringTokenizer(br.readLine());
+            int s = Integer.parseInt(st.nextToken());
+
+            for (int k = 0; k < 4; k++) {
+                int v = Integer.parseInt(st.nextToken());
+                like[s][v] = true;
             }
-            map.put(currentStd, likes);
 
-            setSeat(currentStd);
+            place(s);
         }
 
-        sumSatisfied();
-        System.out.println(result);
+        System.out.println(calcSatisfaction());
     }
 
-    private static void sumSatisfied() {
-        result = 0;
+    private static void place(int s) {
+        int bestX = -1, bestY = -1;
+        int bestLike = -1, bestBlank = -1;
 
-        for (int i = 0; i < N; i++) {
-            for (int j = 0; j < N; j++) {
-                int currentStd = arr[i][j];
-                List<Integer> likes = map.get(currentStd);
+        for (int x = 0; x < N; x++) {
+            for (int y = 0; y < N; y++) {
+                if (seat[x][y] != 0) continue;
 
                 int likeCnt = 0;
-                for (int k = 0; k < 4; k++) {
-                    int nx = i + dx[k];
-                    int ny = j + dy[k];
-                    if (valid(nx, ny) && likes.contains(arr[nx][ny])) likeCnt++;
+                int blankCnt = 0;
+
+                for (int d = 0; d < 4; d++) {
+                    int nx = x + dx[d];
+                    int ny = y + dy[d];
+                    if (!inRange(nx, ny)) continue;
+
+                    int neighbor = seat[nx][ny];
+                    if (neighbor == 0) blankCnt++;
+                    else if (like[s][neighbor]) likeCnt++;
                 }
 
-                if (likeCnt == 1) result += 1;
-                else if (likeCnt == 2) result += 10;
-                else if (likeCnt == 3) result += 100;
-                else if (likeCnt == 4) result += 1000;
+                if (isBetter(x, y, likeCnt, blankCnt, bestX, bestY, bestLike, bestBlank)) {
+                    bestX = x;
+                    bestY = y;
+                    bestLike = likeCnt;
+                    bestBlank = blankCnt;
+                }
             }
         }
+
+        seat[bestX][bestY] = s;
     }
 
-    private static void setSeat(int std) {
-        // 후보군 정하기 좋아하는 학생 인접 최대
-        candidates(std);
-
-        // 후보가 여러개면 인접 빈칸 최대
-        if (candidateList.size() > 1) countBlank();
-
-        // 후보가 여러개면 행 번호 최소
-        if (candidateList.size() > 1) countRow();
-
-        // 후보가 여러개면 열 번호 최소
-        if (candidateList.size() > 1) {
-            int[] currentSeat = countCol();
-            arr[currentSeat[0]][currentSeat[1]] = std;
-        } else {
-            int[] currentSeat = candidateList.get(0);
-            arr[currentSeat[0]][currentSeat[1]] = std;
-        }
+    // 규칙: (좋아하는 학생 인접 수 DESC) -> (빈칸 인접 수 DESC) -> (행 ASC) -> (열 ASC)
+    private static boolean isBetter(int x, int y, int likeCnt, int blankCnt,
+                                    int bestX, int bestY, int bestLike, int bestBlank) {
+        if (likeCnt != bestLike) return likeCnt > bestLike;
+        if (blankCnt != bestBlank) return blankCnt > bestBlank;
+        if (bestX == -1) return true; // 최초 선택
+        if (x != bestX) return x < bestX;
+        return y < bestY;
     }
 
-    private static int[] countCol() {
-        candidateList.sort((a, b) -> a[1] - b[1]);
-        return candidateList.get(0);
-    }
+    private static int calcSatisfaction() {
+        int score = 0;
 
-    private static void countRow() {
-        candidateList.sort((a, b) -> a[0] - b[0]);
-        int minRow = candidateList.get(0)[0];
-        candidateList.removeIf(i -> i[0] != minRow);
-    }
-
-    private static void countBlank() {
-        int size = candidateList.size();
-        int[] counts = new int[size];
-        int[][] stds = new int[size][2];
-
-        int max = -1;
-        int idx = 0;
-
-        for (int[] i : candidateList) {
-            stds[idx] = new int[]{i[0], i[1]};
-            int count = 0;
-
-            for (int j = 0; j < 4; j++) {
-                int nx = i[0] + dx[j];
-                int ny = i[1] + dy[j];
-                if (valid(nx, ny) && arr[nx][ny] == 0) count++;
-            }
-
-            max = Math.max(count, max);
-            counts[idx++] = count;
-        }
-
-        candidateList.clear();
-        for (int i = 0; i < counts.length; i++) {
-            if (counts[i] == max) candidateList.add(stds[i]);
-        }
-    }
-
-    private static void candidates(int std) {
-        candidateList = new ArrayList<>();
-        List<Integer> likes = map.get(std);
-
-        int maxLike = -1;
-
-        for (int i = 0; i < N; i++) {
-            for (int j = 0; j < N; j++) {
-                if (arr[i][j] != 0) continue;
-
+        for (int x = 0; x < N; x++) {
+            for (int y = 0; y < N; y++) {
+                int s = seat[x][y];
                 int likeCnt = 0;
-                for (int k = 0; k < 4; k++) {
-                    int nx = i + dx[k];
-                    int ny = j + dy[k];
-                    if (valid(nx, ny) && likes.contains(arr[nx][ny])) likeCnt++;
+
+                for (int d = 0; d < 4; d++) {
+                    int nx = x + dx[d];
+                    int ny = y + dy[d];
+                    if (!inRange(nx, ny)) continue;
+
+                    int neighbor = seat[nx][ny];
+                    if (neighbor != 0 && like[s][neighbor]) likeCnt++;
                 }
 
-                if (likeCnt > maxLike) {
-                    maxLike = likeCnt;
-                    candidateList.clear();
-                    candidateList.add(new int[]{i, j});
-                } else if (likeCnt == maxLike) {
-                    candidateList.add(new int[]{i, j});
-                }
+                // 0->0, 1->1, 2->10, 3->100, 4->1000
+                if (likeCnt == 1) score += 1;
+                else if (likeCnt == 2) score += 10;
+                else if (likeCnt == 3) score += 100;
+                else if (likeCnt == 4) score += 1000;
             }
         }
+
+        return score;
     }
 
-    private static boolean valid(int x, int y) {
-        return x >= 0 && x < N && y >= 0 && y < N;
+    private static boolean inRange(int x, int y) {
+        return 0 <= x && x < N && 0 <= y && y < N;
     }
 }
