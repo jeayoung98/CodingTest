@@ -1,47 +1,46 @@
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.util.*;
 
 public class Main {
-    static int N, M;
+    static int N, M, lastIdx;
+    static int[] nums;
     static int[] arr;
-    static int[] result;
-    static boolean[] visited;
+    static Set<String> set = new HashSet<>();
     static StringBuilder sb = new StringBuilder();
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws Exception {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        String[] s = br.readLine().split(" ");
-        String[] s1 = br.readLine().split(" ");
-        N = Integer.parseInt(s[0]);
-        M = Integer.parseInt(s[1]);
-        arr = new int[N];
-        result = new int[M];
-        visited = new boolean[N];
-        for (int i = 0; i < N; i++) {
-            arr[i] = Integer.parseInt(s1[i]);
+        StringTokenizer st = new StringTokenizer(br.readLine());
+        N = Integer.parseInt(st.nextToken());
+        M = Integer.parseInt(st.nextToken());
+        arr = new int[M];
+        nums = new int[N + 1];
+
+        st = new StringTokenizer(br.readLine());
+        for (int i = 1; i <= N; i++) {
+            nums[i] = Integer.parseInt(st.nextToken());
         }
-        Arrays.sort(arr);
+
+        Arrays.sort(nums);
         dfs(0);
-        System.out.println(sb.toString());
+        System.out.println(sb);
     }
 
     public static void dfs(int depth) {
         if (depth == M) {
             for (int i = 0; i < M; i++) {
-                sb.append(result[i]).append(" ");
+                sb.append(arr[i]).append(" ");
             }
             sb.append("\n");
             return;
         }
 
         int last = -1;
-        for (int i = 0; i < N; i++) {
-            if (last == arr[i]) continue;
-                result[depth] = arr[i];
-                last = arr[i];
-                dfs(depth + 1);
+        for (int i = 1; i <= N; i++) {
+            if (last == nums[i]) continue;
+            arr[depth] = nums[i];
+            last = nums[i];
+            dfs(depth + 1);
         }
     }
 }
