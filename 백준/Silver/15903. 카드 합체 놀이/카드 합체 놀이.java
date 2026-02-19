@@ -1,22 +1,34 @@
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.Arrays;
+import java.io.*;
+import java.util.*;
 
 public class Main {
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        String[] s = br.readLine().split(" ");
-        int M = Integer.parseInt(s[1]);
+        StringTokenizer st = new StringTokenizer(br.readLine());
+        int N = Integer.parseInt(st.nextToken());
+        int M = Integer.parseInt(st.nextToken());
 
-        long[] arr = Arrays.stream(br.readLine().split(" ")).mapToLong(Long::parseLong).toArray();
-        Arrays.sort(arr);
-        for (int i = 0; i < M; i++) {
-            long sum = arr[0] + arr[1];
-            arr[0] = sum;
-            arr[1] = sum;
-            Arrays.sort(arr);
+        PriorityQueue<Long> queue = new PriorityQueue<>();
+
+        st = new StringTokenizer(br.readLine());
+        for (int i = 0; i < N; i++) {
+            long num = Long.parseLong(st.nextToken());
+            queue.add(num);
         }
-        System.out.println(Arrays.stream(arr).sum());
+
+        for (int i = 0; i < M; i++) {
+            long num1 = queue.poll();
+            long num2 = queue.poll();
+
+            long sum = num1 + num2;
+            queue.add(sum);
+            queue.add(sum);
+        }
+
+        long answer = 0;
+        while (!queue.isEmpty()) {
+            answer += queue.poll();
+        }
+        System.out.println(answer);
     }
 }
