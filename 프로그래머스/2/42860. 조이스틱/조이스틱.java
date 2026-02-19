@@ -1,10 +1,11 @@
+import java.util.*;
+
 class Solution {
     public int solution(String name) {
         int answer = 0;
-        
-        for (int i = 0; i < name.length(); i++) {
-            char c = name.charAt(i);
-            answer += Math.min(c - 'A', 'Z' - c + 1);
+        for(int i = 0; i < name.length(); i++){
+            char current = name.charAt(i);
+            answer += Math.min(current - 'A', 'Z' + 1 - current);
         }
         
         int move = name.length() - 1;
