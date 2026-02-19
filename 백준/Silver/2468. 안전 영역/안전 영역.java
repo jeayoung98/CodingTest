@@ -1,26 +1,25 @@
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.util.*;
 
 public class Main {
     static int N;
     static int[][] arr;
-    static int[] range;
     static boolean[][] visited;
     static Queue<int[]> queue;
-    static int[] dx = new int[]{0, 0, 1, -1};
-    static int[] dy = new int[]{1, -1, 0, 0};
+    static int[] dx = {0, 0, 1, -1};
+    static int[] dy = {1, -1, 0, 0};
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        N = Integer.parseInt(br.readLine());
+        StringTokenizer st = new StringTokenizer(br.readLine());
+        N = Integer.parseInt(st.nextToken());
         arr = new int[N][N];
         Set<Integer> set = new TreeSet<>();
         for (int i = 0; i < N; i++) {
-            String[] s = br.readLine().split(" ");
-            for (int j = 0; j < s.length; j++) {
-                arr[i][j] = Integer.parseInt(s[j]);
-                set.add(Integer.valueOf(s[j]));
+            st = new StringTokenizer(br.readLine());
+            for (int j = 0; j < N; j++) {
+                int num = Integer.parseInt(st.nextToken());
+                arr[i][j] = num;
+                set.add(num);
             }
         }
         int max = set.stream().mapToInt(Integer::intValue).max().orElse(0);
@@ -42,7 +41,7 @@ public class Main {
     }
 
     public static void bfs(int x, int y, int min) {
-        queue = new LinkedList<>();
+        queue = new ArrayDeque<>();
         queue.add(new int[]{x, y});
         visited[x][y] = true;
         while (!queue.isEmpty()) {
