@@ -1,20 +1,21 @@
 import java.util.*;
+
 class Solution {
     public String solution(String[] participant, String[] completion) {
         String answer = "";
-        Map<String,Integer> map = new HashMap<>();
-        for(String name : participant){
-            map.put(name,map.getOrDefault(name,0)+1);
-        }
-        for(String complete : completion){
-            map.put(complete,map.get(complete)-1);
-        }
-        
-        for(String name : map.keySet()){
-            if(map.get(name) != 0){
-                answer = name;
+        Queue<String> pq = new PriorityQueue<>(Arrays.asList(participant));
+        Queue<String> cq = new PriorityQueue<>(Arrays.asList(completion));
+        while(!cq.isEmpty()){
+            if(pq.peek().equals(cq.peek())){
+                pq.poll();
+                cq.poll();
+            }else {
+                answer = pq.poll();
+                break;
             }
         }
+        if(!pq.isEmpty() && cq.isEmpty()) answer = pq.poll();
+        
         return answer;
     }
 }
