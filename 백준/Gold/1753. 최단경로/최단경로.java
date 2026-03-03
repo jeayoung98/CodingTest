@@ -1,66 +1,68 @@
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.util.*;
 
 public class Main {
-    static int N, M, K;
-    static List<List<Node>> list = new ArrayList<>();
-
-    static class Node {
-        int next, cost;
-
-        public Node(int next, int cost) {
-            this.next = next;
-            this.cost = cost;
+    static class Edge implements Comparable<Edge>{
+        int to,w;
+        
+        public Edge(int to, int w) { 
+            this.to = to; this.w = w; 
+        }
+        
+        @Override public int compareTo(Edge o) { 
+            return Integer.compare(this.w, o.w); 
         }
     }
+
+    static StringTokenizer st;
+    static int N, M, K;
+    static List<Edge>[] list;
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        int[] s = Arrays.stream(br.readLine().split(" ")).mapToInt(Integer::parseInt).toArray();
+        st = new StringTokenizer(br.readLine());
+        N = read();
+        M = read();
+        K = Integer.parseInt(br.readLine());
 
-        N = s[0];
-        M = s[1];
-        K = Integer.parseInt(br.readLine()); // 시작 정점
+        list = new List[N + 1];
+        for (int i = 1; i <= N; i++) list[i] = new ArrayList<>();
 
-        for (int i = 0; i <= N; i++) {
-            list.add(new ArrayList<>());
+        for (int i = 0; i < M; i++) {                 
+            st = new StringTokenizer(br.readLine());
+            int idx = read();
+            int to = read();
+            int w = read();
+            list[idx].add(new Edge(to, w));
         }
 
-        for (int i = 0; i < M; i++) {
-            int[] arr = Arrays.stream(br.readLine().split(" ")).mapToInt(Integer::parseInt).toArray();
-            list.get(arr[0]).add(new Node(arr[1], arr[2]));
-        }
-
-        int[] result = dijkstra(K);
+        int[] dist = dijkstra();                  
         StringBuilder sb = new StringBuilder();
-        for (int i = 1; i < result.length; i++) {
-            sb.append(result[i] == Integer.MAX_VALUE ? "INF" : result[i]).append("\n");
+        for (int i = 1; i <= N; i++) {
+            sb.append(dist[i] == Integer.MAX_VALUE ? "INF" : dist[i]).append('\n');
         }
-
-        System.out.println(sb.toString());
+        System.out.print(sb);
     }
 
-    public static int[] dijkstra(int start) {
+    public static int read() { return Integer.parseInt(st.nextToken()); }
+
+    public static int[] dijkstra() {
+        final int INF = Integer.MAX_VALUE;
         int[] dist = new int[N + 1];
-        Arrays.fill(dist, Integer.MAX_VALUE);
-        dist[start] = 0;
+        Arrays.fill(dist, INF);
+        dist[K] = 0;
 
-        PriorityQueue<Node> queue = new PriorityQueue<>(Comparator.comparingInt(a -> a.cost));
-        queue.add(new Node(start, 0));
+        PriorityQueue<Edge> pq = new PriorityQueue<>();
+        pq.add(new Edge(K, 0));
 
-        while (!queue.isEmpty()) {
-            Node current = queue.poll();
-
-            if (dist[current.next] < current.cost) {
-                continue;
-            }
-
-            for (Node nextNode : list.get(current.next)) {
-                if (dist[nextNode.next] > current.cost + nextNode.cost) {
-                    dist[nextNode.next] = current.cost + nextNode.cost;
-                    queue.offer(new Node(nextNode.next, dist[nextNode.next]));
+        while (!pq.isEmpty()) {
+            Edge current = pq.poll();
+            if (dist[current.to] < current.w) continue;
+            for (Edge e : list[current.to]) {
+                int cd = current.w + e.w;
+                if (dist[e.to] > cd) {
+                    dist[e.to] = cd;
+                    pq.add(new Edge(e.to, cd));
                 }
             }
         }
