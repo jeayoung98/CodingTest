@@ -1,13 +1,11 @@
 import java.io.*;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Stack;
+import java.util.*;
 
 public class Main {
     public static void main(String[] args) throws IOException {
         Stack<Integer> stack = new Stack<>();
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-        BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(System.out));
+        StringBuilder sb = new StringBuilder();
 
         int num = Integer.parseInt(reader.readLine());
 
@@ -22,17 +20,14 @@ public class Main {
                 stack.pop();
             }
             if (stack.empty()) {
-                writer.write("0 ");
+                sb.append("0 ");
             } else {
                 if (i == num - 1) {
-                    writer.write(map.get(stack.peek())+"");
-                }else writer.write(map.get(stack.peek()) + " ");
+                    sb.append(map.get(stack.peek()));
+                }else sb.append(map.get(stack.peek())).append(" ");
             }
             stack.push(k);
         }
-
-        writer.flush();
-        writer.close();
-        reader.close();
+        System.out.println(sb);
     }
 }
