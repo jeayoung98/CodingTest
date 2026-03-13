@@ -27,12 +27,12 @@ public class Main {
 
         if (depth == 5) return;
 
-//        int remain = 5 - depth;
-//        if ((maxBlock << remain) <= max) return;
+        int remain = 5 - depth;
+        if ((maxBlock << remain) <= max) return;
 
         for (int dir = 0; dir < 4; dir++) {
             int[][] next = move(board, dir);
-//            if (isSame(board, next)) continue;
+            if (isSame(board, next)) continue;
             dfs(depth + 1, next);
         }
     }
