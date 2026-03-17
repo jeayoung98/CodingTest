@@ -2,44 +2,33 @@ import java.io.*;
 import java.util.*;
 
 public class Main {
-
-    static class Trie {
+    static class Trie{
         Node root = new Node();
 
-        static class Node {
-            Node[] child = new Node[26];
-            boolean endOfWord;
+        static class Node{
+            HashMap<Character, Node> child = new HashMap<>();
+            boolean endOfWord = false;
         }
 
-        void insert(String str) {
-            Node node = root;
-
+        void insert(String str){
+            Node node = this.root;
             for (int i = 0; i < str.length(); i++) {
-                int idx = str.charAt(i) - 'a';
+                char c = str.charAt(i);
+                node.child.putIfAbsent(c, new Node());
 
-                if (node.child[idx] == null) {
-                    node.child[idx] = new Node();
-                }
-
-                node = node.child[idx];
+                node = node.child.get(c);
             }
-
             node.endOfWord = true;
         }
 
         boolean startsWith(String str) {
-            Node node = root;
-
+            Node node = this.root;
             for (int i = 0; i < str.length(); i++) {
-                int idx = str.charAt(i) - 'a';
+                char c = str.charAt(i);
+                if (!node.child.containsKey(c)) return false;
 
-                if (node.child[idx] == null) {
-                    return false;
-                }
-
-                node = node.child[idx];
+                node = node.child.get(c);
             }
-
             return true;
         }
     }
