@@ -1,35 +1,35 @@
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.*;
 
 public class Main {
     static class Trie{
         Node root = new Node();
-
-        static class Node{
-            HashMap<Character, Node> child = new HashMap<>();
+        class Node{
+            Node[] child = new Node[26];
             boolean endOfWord = false;
         }
 
-        void insert(String str){
+        void insert(String str) {
             Node node = this.root;
             for (int i = 0; i < str.length(); i++) {
-                char c = str.charAt(i);
-                node.child.putIfAbsent(c, new Node());
-
-                node = node.child.get(c);
+                int c = str.charAt(i) - 'a';
+                if (node.child[c] == null) node.child[c] = new Node();
+                node = node.child[c];
             }
+
             node.endOfWord = true;
         }
 
         boolean startsWith(String str) {
             Node node = this.root;
             for (int i = 0; i < str.length(); i++) {
-                char c = str.charAt(i);
-                if (!node.child.containsKey(c)) return false;
-
-                node = node.child.get(c);
+                int c = str.charAt(i) - 'a';
+                if (node.child[c] == null) return false;
+                node = node.child[c];
             }
-            return true;
+            return node.child.length != 0;
         }
     }
 
@@ -41,16 +41,16 @@ public class Main {
         int M = Integer.parseInt(st.nextToken());
 
         Trie trie = new Trie();
-
         for (int i = 0; i < N; i++) {
-            trie.insert(br.readLine());
+            String word = br.readLine();
+            trie.insert(word);
         }
 
         int result = 0;
         for (int i = 0; i < M; i++) {
-            if (trie.startsWith(br.readLine())) result++;
+            String prefix = br.readLine();
+            if (trie.startsWith(prefix)) result++;
         }
-
         System.out.println(result);
     }
 }
