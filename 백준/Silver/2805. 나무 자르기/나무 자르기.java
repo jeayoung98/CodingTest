@@ -1,41 +1,46 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.Arrays;
+import java.util.*;
 
 public class Main {
-    static int N;
-    static int M;
-    static int[] trees;
-
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        int[] arr = Arrays.stream(br.readLine().split(" ")).mapToInt(Integer::parseInt).toArray();
-        N = arr[0];
-        M = arr[1];
-        trees = Arrays.stream(br.readLine().split(" ")).mapToInt(Integer::parseInt).toArray();
+        StringTokenizer st = new StringTokenizer(br.readLine());
 
-        int max = Arrays.stream(trees).max().orElse(0);
-        int min = 0;
-        int result = 0;
+        int N = Integer.parseInt(st.nextToken());
+        int M = Integer.parseInt(st.nextToken());
 
-        while (min <= max) {
-            int mid = (min + max) / 2;
-            long sum = 0;
-            for (int tree : trees) {
-                if (tree > mid) {
-                    sum += tree - mid;
+        int[] arr = new int[N];
+        int left = 0;
+        int right = 0;
+
+        int result = Integer.MIN_VALUE;
+        st = new StringTokenizer(br.readLine());
+        for (int i = 0; i < N; i++) {
+            int current = Integer.parseInt(st.nextToken());
+            arr[i] = current;
+            right = Math.max(current, right);
+        }
+
+        while (left <= right) {
+            int mid = (left + right) / 2;
+            long cr = 0;
+            for (int i = 0; i < N; i++) {
+                if (arr[i] - mid >= 0) {
+                    cr += arr[i] - mid;
                 }
             }
 
-            if (sum >= M) {
-                result = mid;
-                min = mid + 1;
+            if (cr >= M) {
+                result = Math.max(mid, result);
+                left = mid + 1;
             } else {
-                max = mid - 1;
+                right = mid - 1;
             }
         }
 
         System.out.println(result);
+
     }
 }
