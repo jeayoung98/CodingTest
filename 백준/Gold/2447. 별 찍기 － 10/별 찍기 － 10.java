@@ -2,45 +2,46 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 
 public class Main {
-    static int[][] arr;
-    static int N;
+    static char[][] arr;
 
     public static void main(String[] args) throws Exception {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        N = Integer.parseInt(br.readLine());
-        arr = new int[N][N];
-        StringBuilder sb = new StringBuilder();
-        divide(0, 0, N);
+        int N = Integer.parseInt(br.readLine());
+
+        arr = new char[N][N];
+
         for (int i = 0; i < N; i++) {
             for (int j = 0; j < N; j++) {
-                sb.append(arr[i][j] == 1 ? " " : "*");
+                arr[i][j] = ' ';
             }
-            sb.append("\n");
         }
-        System.out.println(sb.toString());
+
+        draw(0, 0, N);
+
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < N; i++) {
+            for (int j = 0; j < N; j++) {
+                sb.append(arr[i][j]);
+            }
+            sb.append('\n');
+        }
+
+        System.out.print(sb);
     }
 
-    public static void divide(int col, int row, int size) {
-        int newSize = size / 3;
-        if (col < N && size > 0) {
-            for (int i = col + newSize; i < col + newSize * 2; i++) {
-                for (int j = row + newSize; j < row + newSize * 2; j++) {
-                    arr[i][j] = 1;
-                }
-            }
-
-            divide(col, row, newSize);
-            divide(col, row + newSize, newSize);
-            divide(col, row + newSize * 2, newSize);
-            divide(col + newSize, row , newSize);
-            divide(col + newSize, row + newSize, newSize);
-            divide(col+ newSize, row+ newSize * 2, newSize);
-            divide(col + newSize * 2, row, newSize);
-            divide(col + newSize * 2, row + newSize, newSize);
-            divide(col + newSize * 2, row + newSize * 2, newSize);
-
+    public static void draw(int x, int y, int size) {
+        if (size == 1) {
+            arr[x][y] = '*';
+            return;
         }
 
+        int next = size / 3;
 
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                if (i == 1 && j == 1) continue;
+                draw(x + i * next, y + j * next, next);
+            }
+        }
     }
 }
