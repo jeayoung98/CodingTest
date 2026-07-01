@@ -1,8 +1,8 @@
 import java.util.*;
 
 class Solution {
-    public long solution(int n, int[] times) {
-        Arrays.sort(times);
+    public long solution(int n, int[] times){
+
         long left = 1L;
         long right = (long) times[0] * n;
         long answer = right;
