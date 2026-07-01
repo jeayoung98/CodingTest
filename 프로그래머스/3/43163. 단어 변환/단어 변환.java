@@ -1,56 +1,82 @@
 import java.util.*;
 
 class Solution {
-    public int solution(String begin, String target, String[] words) {
+    class Node {
+        String str;
+        int count;
 
-        return bfs(begin,target,words);
+        public Node(String str, int count) {
+            this.str = str;
+            this.count = count;
+        }
     }
 
-    public int bfs(String begin, String target,String[] words){
-        Queue<WordNode> queue = new LinkedList<>();
-        queue.add(new WordNode(begin, 0));
+    Map<String, List<String>> map = new HashMap<>();
 
-        Set<String> visited = new HashSet<>();
-        visited.add(begin);
+    public int solution(String begin, String target, String[] words) {
+        for (int i = 0; i < words.length - 1; i++) {
+            String a = words[i];
 
-        while(!queue.isEmpty()){
-            WordNode current = queue.poll();
-            String currentWord = current.word;
-            int currentLevel = current.level;
+            for (int j = i + 1; j < words.length; j++) {
+                String b = words[j];
 
-            if(currentWord.equals(target)){
-                return currentLevel;
-            }
-
-            for(String word : words){
-                if(!visited.contains(word) && compare(currentWord, word)){
-                    visited.add(word);
-                    queue.add(new WordNode(word, currentLevel + 1));
+                if (compare(a, b)) {
+                    map.computeIfAbsent(a, k -> new ArrayList<>()).add(b);
+                    map.computeIfAbsent(b, k -> new ArrayList<>()).add(a);
                 }
             }
         }
-        return 0;
+
+        for (String word : words) {
+            if (compare(begin, word)) {
+                map.computeIfAbsent(begin, k -> new ArrayList<>()).add(word);
+                map.computeIfAbsent(word, k -> new ArrayList<>()).add(begin);
+            }
+        }
+
+        return bfs(begin, target);
     }
-    private boolean compare(String a, String b){
+
+    public boolean compare(String a, String b) {
         int count = 0;
-        for(int i = 0; i < a.length(); i++){
-            if(a.charAt(i) != b.charAt(i)){
+
+        for (int i = 0; i < a.length(); i++) {
+            if (a.charAt(i) != b.charAt(i)) {
                 count++;
-                if(count > 1){
+
+                if (count > 1) {
                     return false;
                 }
             }
         }
+
         return count == 1;
     }
 
-    public class WordNode {
-        String word;
-        int level;
+    public int bfs(String begin, String target) {
+        Queue<Node> queue = new ArrayDeque<>();
+        Set<String> visited = new HashSet<>();
 
-        WordNode(String word, int level){
-            this.word = word;
-            this.level = level;
+        queue.add(new Node(begin, 0));
+        visited.add(begin);
+
+        while (!queue.isEmpty()) {
+            Node current = queue.poll();
+
+            if (current.str.equals(target)) {
+                return current.count;
+            }
+
+            List<String> list = map.getOrDefault(current.str, new ArrayList<>());
+
+            for (String next : list) {
+                if (!visited.contains(next)) {
+                    visited.add(next);
+                    queue.add(new Node(next, current.count + 1));
+                }
+            }
         }
+
+        return 0;
     }
 }
