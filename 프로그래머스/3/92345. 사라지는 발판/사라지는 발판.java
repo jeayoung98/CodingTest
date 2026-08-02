@@ -8,7 +8,7 @@ class Solution {
         n = board.length;
         m = board[0].length;
 
-        return dfs(board, aloc[0], aloc[1], bloc[0], bloc[1]);
+        return dfs(board, aloc[0], aloc[1], bloc[0], bloc[1]); 
     }
 
     public int dfs(int[][] board, int ax, int ay, int bx, int by) {
@@ -48,7 +48,7 @@ class Solution {
         return result;
     }
 
-    public boolean canMove(int[][] board, int r, int c) {
-        return r >= 0&& r < n && c >= 0 && c < m && board[r][c] == 1;
+    public boolean canMove(int[][] board, int x, int y) {
+        return x >= 0 && x < n && y >= 0 && y < m && board[x][y] == 1;
     }
 }
