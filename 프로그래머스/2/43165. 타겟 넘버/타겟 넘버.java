@@ -1,22 +1,18 @@
 class Solution {
+    int t;
+    int answer = 0;
     public int solution(int[] numbers, int target) {
-        return dfs(numbers, target, 0, 0);
+        this.t = target;
+        dfs(numbers, 0, 0);
+        return answer;
     }
-
-    public int dfs(int[] numbers, int target, int index, int currentSum) {
-        if (index == numbers.length) {
-            if (currentSum == target) {
-                return 1;
-            } else {
-                return 0;
-            }
+    
+    public void dfs(int[] numbers, int depth, int current){
+        if(depth == numbers.length){
+            if(current == t) answer++;
+            return;
         }
-        
-        // 현재 숫자를 더하는 경우
-        int plus = dfs(numbers, target, index + 1, currentSum + numbers[index]);
-        // 현재 숫자를 빼는 경우
-        int minus = dfs(numbers, target, index + 1, currentSum - numbers[index]);
-
-        return plus + minus;
+            dfs(numbers, depth + 1, current + numbers[depth]);
+            dfs(numbers, depth + 1, current - numbers[depth]);
     }
 }
