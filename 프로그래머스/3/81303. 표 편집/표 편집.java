@@ -73,11 +73,10 @@ class Solution {
         }
 
         StringBuilder sb = new StringBuilder();
-
         for (boolean isDeleted : deleted) {
             sb.append(isDeleted ? 'X' : 'O');
         }
-
+        
         return sb.toString();
     }
 }
