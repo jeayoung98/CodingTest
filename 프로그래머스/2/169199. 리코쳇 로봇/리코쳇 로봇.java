@@ -1,73 +1,77 @@
+
 import java.util.*;
 
 class Solution {
+    int sx = 0;
+    int sy = 0;
+
+    int gx = 0;
+    int gy = 0;
+
     boolean[][] visited;
-    String[][] arr;
-    int startX, startY;
-    int goalX, goalY;
+
+    int[] dx = {0, 0, -1, 1};
+    int[] dy = {1, -1, 0, 0};
+
+    String[][] grid;
 
     public int solution(String[] board) {
+        grid = new String[board.length][board[0].length()];
+        visited = new boolean[grid.length][grid[0].length];
 
-        visited = new boolean[board.length][board[0].length()];
-        arr = new String[board.length][board[0].length()];
-        for (int i = 0; i < board.length; i++) {
-            String[] s = board[i].split("");
-            for (int j = 0; j < board[0].length(); j++) {
-                if (s[j].equals("R")) {
-                    startX = i;
-                    startY = j;
-                } else if (s[j].equals("G")) {
-                    goalX = i;
-                    goalY = j;
+        for (int i = 0; i < grid.length; i++) {
+            for (int j = 0; j < grid[i].length; j++) {
+                grid[i][j] = board[i].charAt(j) + "";
+
+                if (grid[i][j].equals("R")) {
+                    sx = i;
+                    sy = j;
                 }
-                arr[i][j] = s[j];
+
+                if (grid[i][j].equals("G")) {
+                    gx = i;
+                    gy = j;
+                }
             }
         }
 
         return bfs();
-        
     }
-    
-    public int bfs(){
-        Queue<int[]> queue = new LinkedList<>();
-        queue.add(new int[]{startX, startY, 0});
-        visited[startX][startY] = true;
 
-        int[] dx = {-1, 1, 0, 0};
-        int[] dy = {0, 0, -1, 1};
+    public int bfs() {
+        Queue<int[]> queue = new ArrayDeque<>();
+        queue.add(new int[]{sx, sy, 0});
+
+        visited[sx][sy] = true;
 
         while (!queue.isEmpty()) {
-            int[] cur = queue.poll();
-            int x = cur[0];
-            int y = cur[1];
-            int count = cur[2];
+            int[] current = queue.poll();
 
-            if (x == goalX && y == goalY) {
-                return count;
-            }
+            int cx = current[0];
+            int cy = current[1];
+            int cc = current[2];
+
+            if (cx == gx && cy == gy) return cc;
 
             for (int i = 0; i < 4; i++) {
-                int nx = x;
-                int ny = y;
+                int nx = cx;
+                int ny = cy;
 
                 while (true) {
-                    int cx = nx + dx[i];
-                    int cy = ny + dy[i];
+                    int tx = nx + dx[i];
+                    int ty = ny + dy[i];
 
-                    if (cx < 0 || cx >= arr.length || cy < 0 || cy >= arr[0].length) {
-                        break;
-                    }
-                    if (arr[cx][cy].equals("D")) {
+                    if (tx < 0 || tx >= grid.length || ty < 0 || ty >= grid[0].length || grid[tx][ty].equals("D")) {
                         break;
                     }
 
-                    nx = cx;
-                    ny = cy;
+                    nx = tx;
+                    ny = ty;
                 }
 
                 if (!visited[nx][ny]) {
                     visited[nx][ny] = true;
-                    queue.add(new int[]{nx, ny, count + 1});
+                    queue.add(new int[]{nx, ny, cc + 1});
                 }
             }
         }
