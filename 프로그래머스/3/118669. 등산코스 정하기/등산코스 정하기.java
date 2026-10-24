@@ -1,118 +1,102 @@
+
 import java.util.*;
 
 class Solution {
-
     class Edge {
-        int to;
-        int weight;
+        int to, cost;
 
-        Edge(int to, int weight) {
+        public Edge(int to, int cost) {
             this.to = to;
-            this.weight = weight;
+            this.cost = cost;
         }
     }
 
-    class Node {
-        int number;
-        int intensity;
-
-        Node(int number, int intensity) {
-            this.number = number;
-            this.intensity = intensity;
-        }
-    }
-
-    List<Edge>[] graph;
+    List<Edge>[] edgeList;
+    int N;
     boolean[] isSummit;
-    final int INF = Integer.MAX_VALUE;
+    boolean[] isGate;
+    int[] summits;
 
     public int[] solution(int n, int[][] paths, int[] gates, int[] summits) {
-        makeGraph(n, paths);
+        this.N = n;
+        this.summits = summits;
 
         isSummit = new boolean[n + 1];
+        isGate = new boolean[n + 1];
 
         for (int summit : summits) {
             isSummit[summit] = true;
         }
 
-        int[] intensity = dijkstra(n, gates);
+        for (int gate : gates) {
+            isGate[gate] = true;
+        }
 
-        return findAnswer(summits, intensity);
-    }
+        edgeList = new List[n + 1];
 
-    public void makeGraph(int n, int[][] paths) {
-        graph = new ArrayList[n + 1];
-
-        for (int i = 1; i <= n; i++) {
-            graph[i] = new ArrayList<>();
+        for (int i = 0; i <= n; i++) {
+            edgeList[i] = new ArrayList<>();
         }
 
         for (int[] path : paths) {
-            int from = path[0];
-            int to = path[1];
-            int weight = path[2];
+            int a = path[0];
+            int b = path[1];
+            int cost = path[2];
 
-            graph[from].add(new Edge(to, weight));
-            graph[to].add(new Edge(from, weight));
+            edgeList[a].add(new Edge(b, cost));
+            edgeList[b].add(new Edge(a, cost));
         }
+
+        return dijkstra(gates);
     }
 
-    public int[] dijkstra(int n, int[] gates) {
-        int[] intensity = new int[n + 1];
-        Arrays.fill(intensity, INF);
+    public int[] dijkstra(int[] gates) {
+        PriorityQueue<Edge> pq = new PriorityQueue<>((a, b) -> a.cost - b.cost);
 
-        PriorityQueue<Node> pq =new PriorityQueue<>((a, b) -> Integer.compare(a.intensity, b.intensity));
+        int[] dist = new int[N + 1];
+        Arrays.fill(dist, Integer.MAX_VALUE);
 
-        init(gates, intensity, pq);
+        for (int gate : gates) {
+            pq.add(new Edge(gate, 0));
+            dist[gate] = 0;
+        }
 
         while (!pq.isEmpty()) {
-            Node current = pq.poll();
+            Edge current = pq.poll();
 
-            if (current.intensity > intensity[current.number]) {
-                continue;
-            }
+            int to = current.to;
+            int cost = current.cost;
 
-            // 정상에 도착
-            if (isSummit[current.number]) {
-                continue;
-            }
+            if (dist[to] < cost) continue;
 
-            for (Edge edge : graph[current.number]) {
-                int ni = Math.max(current.intensity, edge.weight);
+            // 산봉우리에서는 더 이동하지 않음
+            if (isSummit[to]) continue;
 
-                if (ni >= intensity[edge.to]) {
-                    continue;
+            for (Edge edge : edgeList[to]) {
+                // 출입구를 중간 경유지로 사용하지 않음
+                if (isGate[edge.to]) continue;
+
+                int nextCost = Math.max(cost, edge.cost);
+
+                if (dist[edge.to] > nextCost) {
+                    dist[edge.to] = nextCost;
+                    pq.add(new Edge(edge.to, nextCost));
                 }
-
-                intensity[edge.to] = ni;
-                pq.add(new Node(edge.to, ni));
             }
         }
 
-        return intensity;
-    }
-
-    public void init(int[] gates, int[] intensity, PriorityQueue<Node> pq) {
-        // 시작점 모두 넣음
-        for (int gate : gates) {
-            intensity[gate] = 0;
-            pq.add(new Node(gate, 0));
-        }
-    }
-
-    public int[] findAnswer(int[] summits, int[] intensity) {
         Arrays.sort(summits);
 
-        int currentS = 0;
-        int mi = INF;
+        int summit = -1;
+        int intensity = Integer.MAX_VALUE;
 
-        for (int summit : summits) {
-            if (intensity[summit] < mi) {
-                currentS = summit;
-                mi = intensity[summit];
+        for (int s : summits) {
+            if (dist[s] < intensity) {
+                summit = s;
+                intensity = dist[s];
             }
         }
 
-        return new int[]{currentS, mi};
+        return new int[]{summit, intensity};
     }
 }
