@@ -1,10 +1,10 @@
 # [level 3] 네트워크 - 43162 
 
-[문제 링크](https://school.programmers.co.kr/learn/courses/30/lessons/43162?utm_source=chatgpt.com) 
+[문제 링크](https://school.programmers.co.kr/learn/courses/30/lessons/43162) 
 
 ### 성능 요약
 
-메모리: 74.7 MB, 시간: 0.30 ms
+메모리: 84 MB, 시간: 0.30 ms
 
 ### 구분
 
@@ -16,7 +16,7 @@
 
 ### 제출 일자
 
-2026년 09월 05일 17:26:59
+2026년 10월 25일 12:58:56
 
 ### 문제 설명
 
